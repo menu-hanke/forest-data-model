@@ -1,35 +1,37 @@
+import dataclasses
 from typing import Optional
+from dataclasses import dataclass
 
 
+@dataclass
 class TreeStratum:
     # VMI data type 2
     # SMK data type TreeStratum
     # No RSD equivalent.
+    
+    stand: Optional['ForestStand'] = None
 
-    def __init__(self):
-        self.stand: Optional[ForestStand] = None
+    # identifier of the stratum within the container stand
+    identifier: Optional[str] = None
 
-        # identifier of the stratum within the container stand
-        self.identifier: Optional[str] = None
-
-        self.species: Optional[str] = None
-        self.origin: Optional[int] = None
-        self.stems_per_ha: Optional[float] = None  # stem count within a hectare
-        self.mean_diameter: Optional[float] = None  # in decimeters
-        self.mean_height: Optional[float] = None  # in meters
-        self.breast_height_age: Optional[float] = None  # age in years when reached breast height
-        self.biological_age: Optional[float] = None  # age in years
-        self.basal_area: Optional[float] = None  # stratum basal area
-        self.saw_log_volume_reduction_factor: Optional[float] = None
-        self.cutting_year: Optional[int] = None
-        self.age_when_10cm_diameter_at_breast_height: Optional[int] = None
-        self.tree_number: Optional[int] = None
-        # Angle from plot origin, distance (m) to plot origin, height difference (m) with plot origin
-        self.stand_origin_relative_position: tuple[float, float, float] = (0.0, 0.0, 0.0)
-        self.lowest_living_branch_height: Optional[float] = None
-        self.management_category: Optional[int] = None
-        self.sapling_stems_per_ha: Optional[float] = None  # sapling stem count within a hectare
-        self.sapling_stratum: bool = False  # this reference tree represents saplings
+    species: Optional[str] = None
+    origin: Optional[int] = None
+    stems_per_ha: Optional[float] = None  # stem count within a hectare
+    mean_diameter: Optional[float] = None  # in decimeters
+    mean_height: Optional[float] = None  # in meters
+    breast_height_age: Optional[float] = None  # age in years when reached breast height
+    biological_age: Optional[float] = None  # age in years
+    basal_area: Optional[float] = None  # stratum basal area
+    saw_log_volume_reduction_factor: Optional[float] = None
+    cutting_year: Optional[int] = None
+    age_when_10cm_diameter_at_breast_height: Optional[int] = None
+    tree_number: Optional[int] = None
+    # Angle from plot origin, distance (m) to plot origin, height difference (m) with plot origin
+    stand_origin_relative_position: tuple[float, float, float] = (0.0, 0.0, 0.0)
+    lowest_living_branch_height: Optional[float] = None
+    management_category: Optional[int] = None
+    sapling_stems_per_ha: Optional[float] = None  # sapling stem count within a hectare
+    sapling_stratum: bool = False  # this reference tree represents saplings
 
     def __eq__(self, other: 'TreeStratum'):
         return self.identifier == other.identifier
@@ -84,38 +86,38 @@ class TreeStratum:
         return result
 
 
+@dataclass
 class ReferenceTree:
     # VMI data type 3
     # No SMK equivalent
     # Mela RSD logical record for "tree variables"
 
-    def __init__(self):
-        self.stand: Optional[ForestStand] = None
+    stand: Optional['ForestStand'] = None
 
-        # identifier of the tree within the container stand
-        self.identifier: Optional[str] = None
+    # identifier of the tree within the container stand
+    identifier: Optional[str] = None
 
-        self.stems_per_ha: Optional[float] = None  # RSD record 1
-        self.species: Optional[int] = None  # RSD record 2, 1-8
-        self.breast_height_diameter: Optional[float] = None  # RSD record 3, diameter at 1.3 m height
-        self.height: Optional[float] = None  # RSD record 4, height in meters
-        self.breast_height_age: Optional[float] = None  # RSD record 5, age in years when reached 1.3 m height
-        self.biological_age: Optional[float] = None  # RSD record 6, age in years
-        self.saw_log_volume_reduction_factor: Optional[float] = None  # RSD record 7, 0.0-1.0
-        self.pruning_year: int = 0  # RSD record 8
-        # RSD record 9, age when reached 10 cm diameter at 1.3 m height. Hard variable to name...
-        self.age_when_10cm_diameter_at_breast_height: int = 0
-        self.origin: Optional[int] = None  # RSD record 10, 0-3; natural, seeded, planted, supplementary planted
-        self.tree_number: Optional[int] = None  # RSD record 11, default is the order of appearance (or in sample plot)
-        # RSD records 12, 13, 14.
-        # Angle from plot origin, distance (m) to plot origin, height difference (m) with plot origin
-        self.stand_origin_relative_position: tuple[float, float, float] = (0.0, 0.0, 0.0)
-        self.lowest_living_branch_height: Optional[float] = None  # RSD record 15, meters
-        self.management_category: Optional[int] = None  # RSD record 16
-        # RSD record 17 reserved for system
+    stems_per_ha: Optional[float] = None  # RSD record 1
+    species: Optional[int] = None  # RSD record 2, 1-8
+    breast_height_diameter: Optional[float] = None  # RSD record 3, diameter at 1.3 m height
+    height: Optional[float] = None  # RSD record 4, height in meters
+    breast_height_age: Optional[float] = None  # RSD record 5, age in years when reached 1.3 m height
+    biological_age: Optional[float] = None  # RSD record 6, age in years
+    saw_log_volume_reduction_factor: Optional[float] = None  # RSD record 7, 0.0-1.0
+    pruning_year: int = 0  # RSD record 8
+    # RSD record 9, age when reached 10 cm diameter at 1.3 m height. Hard variable to name...
+    age_when_10cm_diameter_at_breast_height: int = 0
+    origin: Optional[int] = None  # RSD record 10, 0-3; natural, seeded, planted, supplementary planted
+    tree_number: Optional[int] = None  # RSD record 11, default is the order of appearance (or in sample plot)
+    # RSD records 12, 13, 14.
+    # Angle from plot origin, distance (m) to plot origin, height difference (m) with plot origin
+    stand_origin_relative_position: tuple[float, float, float] = (0.0, 0.0, 0.0)
+    lowest_living_branch_height: Optional[float] = None  # RSD record 15, meters
+    management_category: Optional[int] = None  # RSD record 16
+    # RSD record 17 reserved for system
 
-        self.tree_category: Optional[str] = None  # VMI tree_category for living/dead/otherwise unusable tree
-        self.sapling: bool = False
+    tree_category: Optional[str] = None  # VMI tree_category for living/dead/otherwise unusable tree
+    sapling: bool = False
 
     def __eq__(self, other: 'ReferenceTree'):
         return self.identifier == other.identifier
@@ -187,61 +189,61 @@ class ReferenceTree:
         ]
 
 
+@dataclass
 class ForestStand:
     # VMI data type 1
     # SMK data type Stand
     # Mela RSD logical record for "sample plot variables"
 
-    def __init__(self):
-        self.reference_trees: list[ReferenceTree] = []
-        self.tree_strata: list[TreeStratum] = []
+    reference_trees: list[ReferenceTree] = dataclasses.field(default_factory=list)
+    tree_strata: list[TreeStratum] = dataclasses.field(default_factory=list)
 
-        self.identifier: Optional[str] = None  # unique identifier for entity within its domain
+    identifier: Optional[str] = None  # unique identifier for entity within its domain
 
-        self.management_unit_id: Optional[int] = None  # RSD record 1
-        # RSD record 7 (default to management unit id unless overriden)
-        self.stand_id: Optional[int] = self.management_unit_id
+    management_unit_id: Optional[int] = None  # RSD record 1
+    # RSD record 7 (default to management unit id unless overriden)
+    stand_id: Optional[int] = management_unit_id
 
-        self.year: Optional[int] = None  # RSD record 2
-        self.area: float = 0.0  # RSD record 3
-        self.area_weight: float = self.area  # RSD record 4 (default to area_ha, unless overridden)
+    year: Optional[int] = None  # RSD record 2
+    area: float = 0.0  # RSD record 3
+    area_weight: float = area  # RSD record 4 (default to area_ha, unless overridden)
 
-        # RSD records 5 (lat), 6 (lon) in ERTS-TM35FIN (EPSG:3067), 8 (height)
-        # lat, lon, height above sea level (m), CRS
-        self.geo_location: Optional[tuple[float, float, float, str]] = None
+    # RSD records 5 (lat), 6 (lon) in ERTS-TM35FIN (EPSG:3067), 8 (height)
+    # lat, lon, height above sea level (m), CRS
+    geo_location: Optional[tuple[float, float, float, str]] = None
 
-        self.degree_days: Optional[float] = None  # RSD record 9
-        self.owner_category: Optional[int] = None  # RSD record 10, 0-4
-        self.land_use_category: Optional[int] = None  # RSD record 11, 1-9
-        self.soil_peatland_category: Optional[int] = None  # RSD record 12, 1-5
-        self.site_type_category: Optional[int] = None  # RSD record 13, 1-8
-        self.tax_class_reduction: Optional[int] = None  # RSD record 14, 0-4
-        self.tax_class: Optional[int] = None  # RSD record 15, 1-7
-        self.drainage_category: Optional[int] = None  # RSD record 16, 0-5
-        self.drainage_feasibility: Optional[bool] = None  # RSD record 17, (0 yes, 1 no)
-        # RSD record 18 is unspecified and defaults to '0'
-        self.drainage_year: Optional[int] = None  # RSD record 19
-        self.fertilization_year: Optional[int] = None  # RSD record 20
-        self.soil_surface_preparation_year: Optional[int] = None  # RSD record 21
-        self.natural_regeneration_feasibility: Optional[bool] = None  # RSD record 22 (0 yes, 1 no)
-        self.regeneration_area_cleaning_year: Optional[int] = None  # RSD record 23
-        self.development_class: Optional[int] = None  # RSD record 24
-        self.artificial_regeneration_year: Optional[int] = None  # RSD record 25
-        self.young_stand_tending_year: Optional[int] = None  # RSD record 26
-        self.pruning_year: Optional[int] = None  # RSD record 27
-        self.cutting_year: Optional[int] = None  # RSD record 28
-        self.forestry_centre_id: Optional[int] = None  # RSD record 29, 0-13
-        self.forest_management_category: Optional[int] = None  # RSD record 30, 1-3,6-7
-        self.method_of_last_cutting: Optional[int] = None  # RSD record 31, 0-6
-        self.municipality_id: Optional[int] = None  # RSD record 32, code from Statistics Finland
-        # RSD record 33 and 34 unused
+    degree_days: Optional[float] = None  # RSD record 9
+    owner_category: Optional[int] = None  # RSD record 10, 0-4
+    land_use_category: Optional[int] = None  # RSD record 11, 1-9
+    soil_peatland_category: Optional[int] = None  # RSD record 12, 1-5
+    site_type_category: Optional[int] = None  # RSD record 13, 1-8
+    tax_class_reduction: Optional[int] = None  # RSD record 14, 0-4
+    tax_class: Optional[int] = None  # RSD record 15, 1-7
+    drainage_category: Optional[int] = None  # RSD record 16, 0-5
+    drainage_feasibility: Optional[bool] = None  # RSD record 17, (0 yes, 1 no)
+    # RSD record 18 is unspecified and defaults to '0'
+    drainage_year: Optional[int] = None  # RSD record 19
+    fertilization_year: Optional[int] = None  # RSD record 20
+    soil_surface_preparation_year: Optional[int] = None  # RSD record 21
+    natural_regeneration_feasibility: Optional[bool] = None  # RSD record 22 (0 yes, 1 no)
+    regeneration_area_cleaning_year: Optional[int] = None  # RSD record 23
+    development_class: Optional[int] = None  # RSD record 24
+    artificial_regeneration_year: Optional[int] = None  # RSD record 25
+    young_stand_tending_year: Optional[int] = None  # RSD record 26
+    pruning_year: Optional[int] = None  # RSD record 27
+    cutting_year: Optional[int] = None  # RSD record 28
+    forestry_centre_id: Optional[int] = None  # RSD record 29, 0-13
+    forest_management_category: Optional[int] = None  # RSD record 30, 1-3,6-7
+    method_of_last_cutting: Optional[int] = None  # RSD record 31, 0-6
+    municipality_id: Optional[int] = None  # RSD record 32, code from Statistics Finland
+    # RSD record 33 and 34 unused
 
-        # stand specific factors for scaling estimated ReferenceTree count per hectare
-        self.stems_per_ha_scaling_factors: tuple[float, float] = (1.0, 1.0)
+    # stand specific factors for scaling estimated ReferenceTree count per hectare
+    stems_per_ha_scaling_factors: tuple[float, float] = (1.0, 1.0)
 
-        self.fra_category: Optional[str] = None  # VMI fra category
-        self.land_use_category_detail: Optional[str] = None  # VMI land use category detail
-        self.auxiliary_stand: bool = False  # VMI stand number > 1 (meaning sivukoeala, auxiliary stand)
+    fra_category: Optional[str] = None  # VMI fra category
+    land_use_category_detail: Optional[str] = None  # VMI land use category detail
+    auxiliary_stand: bool = False  # VMI stand number > 1 (meaning sivukoeala, auxiliary stand)
 
     def __eq__(self, other: 'ForestStand'):
         return self.identifier == other.identifier
