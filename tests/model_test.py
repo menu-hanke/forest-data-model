@@ -1,9 +1,65 @@
 import unittest
 
-from forestdatamodel import ForestStand, ReferenceTree
+from forestdatamodel import ForestStand, ReferenceTree, TreeStratum
 
 
 class TestForestDataModel(unittest.TestCase):
+
+    def test_stratum_get_breast_height_age(self):
+        fixture = TreeStratum()
+        assertions = [
+            ((10.0, 10.0), 10.0),
+            ((10.0, None), 10),
+            ((None, 10.0), 0.0),
+            ((None, 20.0), 8.0),
+            ((None, None), 0.0),
+        ]
+        for i in assertions:
+            fixture.breast_height_age = i[0][0]
+            fixture.biological_age = i[0][1]
+            self.assertEqual(i[1], fixture.get_breast_height_age())
+        # Final test case for different default param.
+        fixture.breast_height_age = None
+        fixture.biological_age = 20.0
+        self.assertEqual(10.0, fixture.get_breast_height_age(subtrahend=10))
+
+    def test_has_stems_per_ha(self):
+        fixture = TreeStratum()
+        assertions = [
+            (10.0, True),
+            (None, False),
+            (-10.0, False),
+            (0.0, False),
+        ]
+        for i in assertions:
+            fixture.stems_per_ha = i[0]
+            self.assertEqual(i[1], fixture.has_stems_per_ha())
+
+
+    def test_stratum_has_basal_area(self):
+        fixture = TreeStratum()
+        assertions = [
+            (10.0, True),
+            (None, False),
+            (-10.0, False),
+            (0.0, False),
+        ]
+        for i in assertions:
+            fixture.basal_area = i[0]
+            self.assertEqual(i[1], fixture.has_basal_area())
+
+    def test_stratum_has_breast_height_age(self):
+        fixture = TreeStratum()
+        assertions = [
+            (10.0, True),
+            (None, False),
+            (-10.0, False),
+            (0.0, False),
+        ]
+        for i in assertions:
+            fixture.breast_height_age = i[0]
+            self.assertEqual(i[1], fixture.has_breast_height_age())
+
 
     def test_reference_tree_has_biological_age(self):
         fixture = ReferenceTree()
