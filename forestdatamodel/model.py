@@ -8,7 +8,7 @@ class TreeStratum:
     # VMI data type 2
     # SMK data type TreeStratum
     # No RSD equivalent.
-    
+
     stand: Optional['ForestStand'] = None
 
     # identifier of the stratum within the container stand
@@ -36,6 +36,30 @@ class TreeStratum:
     def __eq__(self, other: 'TreeStratum'):
         return self.identifier == other.identifier
 
+    def has_stems_per_ha(self) -> bool:
+        if self.stems_per_ha is None:
+            return False
+        elif self.stems_per_ha > 0.0:
+            return True
+        else:
+            return False
+
+    def has_diameter(self) -> bool:
+        if self.mean_diameter is None:
+            return False
+        elif self.mean_diameter > 0.0:
+            return True
+        else:
+            return False
+
+    def has_breast_height_age(self) -> bool:
+        if self.breast_height_age is None:
+            return False
+        elif self.breast_height_age > 0.0:
+            return True
+        else:
+            return False
+
     def has_biological_age(self) -> bool:
         if self.biological_age is None:
             return False
@@ -44,10 +68,10 @@ class TreeStratum:
         else:
             return False
 
-    def compare_species(self, other: 'TreeStratum') -> bool:
-        if self.species is None or other.species is None:
+    def has_basal_area(self) -> bool:
+        if self.basal_area is None:
             return False
-        elif self.species == other.species:
+        elif self.basal_area > 0.0:
             return True
         else:
             return False
@@ -60,10 +84,10 @@ class TreeStratum:
         else:
             return False
 
-    def has_diameter(self) -> bool:
-        if self.mean_diameter is None:
+    def compare_species(self, other: 'TreeStratum') -> bool:
+        if self.species is None or other.species is None:
             return False
-        elif self.mean_diameter > 0.0:
+        elif self.species == other.species:
             return True
         else:
             return False
@@ -84,6 +108,15 @@ class TreeStratum:
         result.management_category = 1.0
         result.sapling = True
         return result
+
+    def get_breast_height_age(self, subtrahend: float = 12.0) -> float:
+        if self.has_breast_height_age():
+            return self.breast_height_age
+        elif self.has_biological_age():
+            new_breast_height_age = self.biological_age - subtrahend
+            return 0.0 if new_breast_height_age <= 0.0 else new_breast_height_age
+        else:
+            return 0.0
 
 
 @dataclass
