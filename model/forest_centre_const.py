@@ -29,3 +29,4 @@ class ForestCentreSpecies(Enum):
     MAPLE = 26
     CURLY_BIRCH = 27
     WYCH_ELM = 28
+    

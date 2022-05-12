@@ -31,3 +31,4 @@ class VMISpecies(Enum):
     BIRD_CHERRY = "B8"
     MAPLE = "B9"
     HAZEL = "C1"
+    

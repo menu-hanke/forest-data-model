@@ -95,7 +95,7 @@ class MelaMethodOfTheLastCutting(Enum):
     FIRST_THINNING = 3
     OVER_STORY_REMOVAL = 4
     SEED_TREE_CUTTING = 5
-    sHELTERWOOD_CUTTING = 6
+    SHELTERWOOD_CUTTING = 6
 
 class MelaTreeSpecies(Enum):
     SCOTS_PINE = 1
@@ -112,3 +112,4 @@ class MelaTreeOrigin(Enum):
     SEEDED = 1
     PLANTED = 2
     SUPPLEMENTARY_PLANTED = 3
+    
