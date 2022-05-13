@@ -1,6 +1,8 @@
 from enum import Enum
 
 class InternalTreeSpecies(Enum):
+    """This list is formed by combining VMI and Forest centre species 
+    and listing all the distinct ones"""
     PINE = 1
     SPRUCE = 2
     SILVER_BIRCH = 3

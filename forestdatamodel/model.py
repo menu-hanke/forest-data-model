@@ -1,7 +1,7 @@
 import dataclasses
 from typing import Optional
 from dataclasses import dataclass
-
+from forestdatamodel.constants.internal_const import InternalTreeSpecies
 
 @dataclass
 class TreeStratum:
@@ -131,7 +131,7 @@ class ReferenceTree:
     identifier: Optional[str] = None
 
     stems_per_ha: Optional[float] = None  # RSD record 1
-    species: Optional[int] = None  # RSD record 2, 1-8
+    species: Optional[InternalTreeSpecies] = None  # RSD record 2, 1-8
     breast_height_diameter: Optional[float] = None  # RSD record 3, diameter at 1.3 m height
     height: Optional[float] = None  # RSD record 4, height in meters
     breast_height_age: Optional[float] = None  # RSD record 5, age in years when reached 1.3 m height

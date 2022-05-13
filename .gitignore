@@ -2,3 +2,7 @@
 *.orig
 .vscode
 __pycache__
+
+#files created when testing package locally
+sh.exe.stackdump
+forestdatamodel.egg-info/
