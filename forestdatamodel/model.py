@@ -36,6 +36,14 @@ class TreeStratum:
     def __eq__(self, other: 'TreeStratum'):
         return self.identifier == other.identifier
 
+    def has_height(self):
+        if self.mean_height is None:
+            return False
+        elif self.mean_height > 0.0:
+            return True
+        else:
+            return False
+
     def has_stems_per_ha(self) -> bool:
         if self.stems_per_ha is None:
             return False
