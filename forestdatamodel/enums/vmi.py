@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class VMISpecies(Enum):
     PINE = "1"
     SPRUCE = "2"
@@ -31,4 +32,3 @@ class VMISpecies(Enum):
     BIRD_CHERRY = "B8"
     MAPLE = "B9"
     HAZEL = "C1"
-    

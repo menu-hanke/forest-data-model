@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class ForestCentreSpecies(Enum):
     PINE = 1
     SPRUCE = 2
@@ -29,4 +30,5 @@ class ForestCentreSpecies(Enum):
     MAPLE = 26
     CURLY_BIRCH = 27
     WYCH_ELM = 28
-    
+    UNKNOWN_CONIFEROUS_SPECIES = 29
+    UNKNOWN_DECIDUOUS_SPECIES = 30

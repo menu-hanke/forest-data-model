@@ -1,2 +1,2 @@
 from forestdatamodel.model import *
-from forestdatamodel.constants import *
+from forestdatamodel.enums import *

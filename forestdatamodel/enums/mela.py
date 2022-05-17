@@ -1,6 +1,7 @@
 from enum import Enum
 
-#index starts at 0 for variables which start at 0 in the MELA doc, same for those starting at 1
+# index starts at 0 for variables which start at 0 in the MELA doc, same for those starting at 1
+
 
 class MelaOwnerCategory(Enum):
     PRIVATE = 0
@@ -8,6 +9,7 @@ class MelaOwnerCategory(Enum):
     STATE = 2
     MUNICIPALITY = 3
     COMMUNITY = 4
+
 
 class MelaLandUseCategory(Enum):
     FOREST_LAND = 1
@@ -19,6 +21,7 @@ class MelaLandUseCategory(Enum):
     ROADS_OR_ELECTRIC_LINES = 7
     LAKES_AND_RIVERS = 8
     SEA = 9
+
 
 class MelaSoilAndPeatlandCategory(Enum):
     MINERAL_SOIL = 1
@@ -38,6 +41,7 @@ class MelaSiteTypeCategory(Enum):
     ROCKY_OR_SANDY_AREA = 7
     OPEN_MOUNTAINS = 8
 
+
 class MelaReductionOfForestTaxationClass(Enum):
     NO_REDUCTION = 0
     STONY_SOIL = 1
@@ -56,13 +60,15 @@ class MelaSiteFertilityCategory(Enum):
     SCRUB_LAND = 6
     WASTE_LAND = 7
 
+
 class MelaDrainageCategory(Enum):
     UNDRAINED_MINERAL_SOIL = 0
     DITCHED_MINERAL_SOIL = 1
     UNDRAINED_MIRE = 2
     DITCHED_MIRE = 3
-    TRANSFORMING_MIRE  = 4
+    TRANSFORMING_MIRE = 4
     TRANSFORMED_MIRE = 5
+
 
 class MelaForestryCentre(Enum):
     AHVENANMAA = 0
@@ -80,13 +86,14 @@ class MelaForestryCentre(Enum):
     POHJOIS_POHJANMAA = 12
     LAPPI = 13
 
+
 class MelaForestManagementCategory(Enum):
-    '''NOTE: codes 4 and 5 do not exist in the Mela doc'''
     FOREST_LAND_NO_RESTRICTIONS_FOR_TIMBER_PRODUCTION = 1
     FOREST_LAND_ADMINISTRATIONAL_RESTRICTIONS_FOR_TIMBER_PRODUCTION = 2
     SCRUB_LAND_NO_RESTRICTIONS_FOR_TIMBER_PRODUCTION = 3
-    WASTE_LAND_NO_RESTRICTIONS_FOR_TIMBER_PRODUCTION= 6
+    WASTE_LAND_NO_RESTRICTIONS_FOR_TIMBER_PRODUCTION = 6
     FOREST_SCRUB_OR_WASTE_LAND_NO_TIMBER_PRODUCTION_ALLOWED = 7
+
 
 class MelaMethodOfTheLastCutting(Enum):
     NO_CUTTING = 0
@@ -97,6 +104,7 @@ class MelaMethodOfTheLastCutting(Enum):
     SEED_TREE_CUTTING = 5
     SHELTERWOOD_CUTTING = 6
 
+
 class MelaTreeSpecies(Enum):
     SCOTS_PINE = 1
     NORWAY_SPRUCE = 2
@@ -104,12 +112,12 @@ class MelaTreeSpecies(Enum):
     DOWNY_BIRCH = 4
     ASPEN = 5
     ALDER = 6
-    OTHER_CONIFEROUS_SPECIES_THAN_1_OR_2 = 7
-    OTHER_DECIDUOUS_SPECIES_THAN_3_TO_6 = 8
+    OTHER_CONIFEROUS = 7
+    OTHER_DECIDUOUS = 8
+
 
 class MelaTreeOrigin(Enum):
     NATURAL = 0
     SEEDED = 1
     PLANTED = 2
     SUPPLEMENTARY_PLANTED = 3
-    

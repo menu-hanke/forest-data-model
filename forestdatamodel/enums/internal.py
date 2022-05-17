@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class InternalTreeSpecies(Enum):
     """This list is formed by combining VMI and Forest centre species 
     and listing all the distinct ones"""
@@ -10,8 +11,8 @@ class InternalTreeSpecies(Enum):
     ASPEN = 5
     GREY_ALDER = 6
     COMMON_ALDER = 7
-    OTHER_CONIFEROUS_SPECIES = 8
-    OTHER_DECIDUOUS_SPECIES = 9
+    OTHER_CONIFEROUS = 8
+    OTHER_DECIDUOUS = 9
     DOUGLAS_FIR = 10
     JUNIPER = 11
     SHORE_PINE = 12
@@ -31,8 +32,8 @@ class InternalTreeSpecies(Enum):
     MAPLE = 26
     CURLY_BIRCH = 27
     WYCH_ELM = 28
-    UNKNOWN_CONIFER_SPECIES = 29
-    UNKNOWN_DECIDUOUS_SPECIES = 30
+    UNKNOWN_CONIFEROUS = 29
+    UNKNOWN_DECIDUOUS = 30
     OTHER_PINE = 31
     OTHER_SPRUCE = 32
     THUJA = 33
