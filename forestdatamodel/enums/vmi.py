@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class VMISpecies(Enum):
+class VmiSpecies(Enum):
     PINE = "1"
     SPRUCE = "2"
     SILVER_BIRCH = "3"

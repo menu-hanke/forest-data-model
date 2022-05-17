@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class InternalTreeSpecies(Enum):
+class TreeSpecies(Enum):
     """This list is formed by combining VMI and Forest centre species 
     and listing all the distinct ones"""
     PINE = 1
