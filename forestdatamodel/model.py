@@ -44,6 +44,14 @@ class TreeStratum:
         else:
             return False
 
+    def has_sapling_stems_per_ha(self) -> bool:
+        if self.sapling_stems_per_ha is None:
+            return False
+        elif self.sapling_stems_per_ha > 0.0:
+            return True
+        else:
+            return False
+
     def has_stems_per_ha(self) -> bool:
         if self.stems_per_ha is None:
             return False
