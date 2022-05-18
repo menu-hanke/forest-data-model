@@ -5,6 +5,18 @@ from forestdatamodel import ForestStand, ReferenceTree, TreeStratum
 
 class TestForestDataModel(unittest.TestCase):
 
+    def test_has_sapling_stems_per_ha(self):
+        fixture = TreeStratum()
+        assertions = [
+            (10.0, True),
+            (None, False),
+            (-10.0, False),
+            (0.0, False),
+        ]
+        for i in assertions:
+            fixture.sapling_stems_per_ha = i[0]
+            self.assertEqual(i[1], fixture.has_sapling_stems_per_ha())
+
     def test_has_height(self):
         fixture = TreeStratum()
         assertions = [
