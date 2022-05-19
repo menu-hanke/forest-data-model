@@ -2,6 +2,7 @@ import dataclasses
 from typing import Optional
 from dataclasses import dataclass
 from forestdatamodel.enums.internal import TreeSpecies
+from forestdatamodel.util import property_matches_condition, gt, eq, value_exists
 
 
 @dataclass
@@ -41,71 +42,39 @@ class TreeStratum:
         return self.identifier == other.identifier
 
     def has_height(self):
-        if self.mean_height is None:
-            return False
-        elif self.mean_height > 0.0:
-            return True
-        else:
-            return False
+        """DEPRECATED; use forestdatamodel.util.property_matches_condition directly instead"""
+        return property_matches_condition(self.mean_height, lambda x: gt(x, 0.0))
 
     def has_sapling_stems_per_ha(self) -> bool:
-        if self.sapling_stems_per_ha is None:
-            return False
-        elif self.sapling_stems_per_ha > 0.0:
-            return True
-        else:
-            return False
+        """DEPRECATED; use forestdatamodel.util.property_matches_condition directly instead"""
+        return property_matches_condition(self.sapling_stems_per_ha, lambda x: gt(x, 0.0))
 
     def has_stems_per_ha(self) -> bool:
-        if self.stems_per_ha is None:
-            return False
-        elif self.stems_per_ha > 0.0:
-            return True
-        else:
-            return False
+        """DEPRECATED; use forestdatamodel.util.property_matches_condition directly instead"""
+        return property_matches_condition(self.stems_per_ha, lambda x: gt(x, 0.0))
 
     def has_diameter(self) -> bool:
-        if self.mean_diameter is None:
-            return False
-        elif self.mean_diameter > 0.0:
-            return True
-        else:
-            return False
+        """DEPRECATED; use forestdatamodel.util.property_matches_condition directly instead"""
+        return property_matches_condition(self.mean_diameter, lambda x: gt(x, 0.0))
 
     def has_breast_height_age(self) -> bool:
-        if self.breast_height_age is None:
-            return False
-        elif self.breast_height_age > 0.0:
-            return True
-        else:
-            return False
+        """DEPRECATED; use forestdatamodel.util.property_matches_condition directly instead"""
+        return property_matches_condition(self.breast_height_age, lambda x: gt(x, 0.0))
 
     def has_biological_age(self) -> bool:
-        if self.biological_age is None:
-            return False
-        elif self.biological_age > 0.0:
-            return True
-        else:
-            return False
+        """DEPRECATED; use forestdatamodel.util.property_matches_condition directly instead"""
+        return property_matches_condition(self.biological_age, lambda x: gt(x, 0.0))
 
     def has_basal_area(self) -> bool:
-        if self.basal_area is None:
-            return False
-        elif self.basal_area > 0.0:
-            return True
-        else:
-            return False
+        """DEPRECATED; use forestdatamodel.util.property_matches_condition directly instead"""
+        return property_matches_condition(self.basal_area, lambda x: gt(x, 0.0))
 
     def has_height_over_130_cm(self) -> bool:
-        if self.mean_height is None:
-            return False
-        elif self.mean_height > 1.3:
-            return True
-        else:
-            return False
+        """DEPRECATED; use forestdatamodel.util.property_matches_condition directly instead"""
+        return property_matches_condition(self.mean_height, lambda x: gt(x, 1.3))
 
     def compare_species(self, other: 'TreeStratum') -> bool:
-        if self.species is None or other.species is None:
+        if not value_exists(self.species) or not value_exists(other.species):
             return False
         elif self.species == other.species:
             return True
@@ -187,34 +156,22 @@ class ReferenceTree:
         pass
 
     def has_biological_age(self) -> bool:
-        if self.biological_age is None:
-            return False
-        elif self.biological_age > 0.0:
-            return True
-        else:
-            return False
+        """DEPRECATED; use forestdatamodel.util.property_matches_condition directly instead"""
+        return property_matches_condition(self.biological_age, lambda x: gt(x, 0.0))
 
     def has_diameter(self) -> bool:
-        if self.breast_height_diameter is None:
-            return False
-        elif self.breast_height_diameter > 0.0:
-            return True
-        else:
-            return False
+        """DEPRECATED; use forestdatamodel.util.property_matches_condition directly instead"""
+        return property_matches_condition(self.breast_height_diameter, lambda x: gt(x, 0.0))
 
     def has_height_over_130_cm(self) -> bool:
-        if self.height is None:
-            return False
-        elif self.height > 1.3:
-            return True
-        else:
-            return False
+        """DEPRECATED; use forestdatamodel.util.property_matches_condition directly instead"""
+        return property_matches_condition(self.height, lambda x: gt(x, 1.3))
 
     def is_living(self) -> bool:
         return self.tree_category in (None, '0', '1', '3', '7')
 
     def compare_species(self, other: 'ReferenceTree') -> bool:
-        if self.species is None or other.species is None:
+        if not value_exists(self.species) or not value_exists(other.species):
             return False
         elif self.species == other.species:
             return True
@@ -360,7 +317,7 @@ class ForestStand:
         return result
 
     def as_rsd_row(self):
-        forestry_centre_id = -1 if self.forestry_centre_id is None else self.forestry_centre_id
+        forestry_centre_id = -1 if not value_exists(self.forestry_centre_id) else self.forestry_centre_id
         return [
             self.management_unit_id,
             self.year,
