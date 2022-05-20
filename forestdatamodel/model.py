@@ -1,6 +1,9 @@
 import dataclasses
+from enum import Enum
 from typing import Optional
 from dataclasses import dataclass
+
+from forestdatamodel.conversion.internal2mela import mela_stand, mela_tree
 from forestdatamodel.enums.internal import TreeSpecies
 
 
@@ -15,7 +18,7 @@ class TreeStratum:
     # identifier of the stratum within the container stand
     identifier: Optional[str] = None
 
-    species: Optional[TreeSpecies] = None
+    species: Optional[Enum] = None
     origin: Optional[int] = None
     stems_per_ha: Optional[float] = None  # stem count within a hectare
     mean_diameter: Optional[float] = None  # in decimeters
@@ -151,7 +154,7 @@ class ReferenceTree:
     identifier: Optional[str] = None
 
     stems_per_ha: Optional[float] = None  # RSD record 1
-    species: Optional[TreeSpecies] = None  # RSD record 2, 1-8
+    species: Optional[Enum] = None  # RSD record 2, 1-8
     # RSD record 3, diameter at 1.3 m height
     breast_height_diameter: Optional[float] = None
     height: Optional[float] = None  # RSD record 4, height in meters
@@ -227,25 +230,26 @@ class ReferenceTree:
         return result
 
     def as_rsd_row(self):
+        melaed = mela_tree(self)
         saw_log_volume_reduction_factor = \
-            -1 if self.saw_log_volume_reduction_factor is None else self.saw_log_volume_reduction_factor
+            -1 if melaed.saw_log_volume_reduction_factor is None else melaed.saw_log_volume_reduction_factor
         return [
-            self.stems_per_ha,
-            self.species.value,
-            self.breast_height_diameter,
-            self.height,
-            self.breast_height_age,
-            self.biological_age,
+            melaed.stems_per_ha,
+            melaed.species.value,
+            melaed.breast_height_diameter,
+            melaed.height,
+            melaed.breast_height_age,
+            melaed.biological_age,
             saw_log_volume_reduction_factor,
-            self.pruning_year,
-            self.age_when_10cm_diameter_at_breast_height,
-            self.origin,
-            self.tree_number,
-            self.stand_origin_relative_position[0],
-            self.stand_origin_relative_position[1],
-            self.stand_origin_relative_position[2],
-            self.lowest_living_branch_height,
-            self.management_category,
+            melaed.pruning_year,
+            melaed.age_when_10cm_diameter_at_breast_height,
+            melaed.origin,
+            melaed.tree_number,
+            melaed.stand_origin_relative_position[0],
+            melaed.stand_origin_relative_position[1],
+            melaed.stand_origin_relative_position[2],
+            melaed.lowest_living_branch_height,
+            melaed.management_category,
             None
         ]
 
@@ -360,40 +364,41 @@ class ForestStand:
         return result
 
     def as_rsd_row(self):
-        forestry_centre_id = -1 if self.forestry_centre_id is None else self.forestry_centre_id
+        melaed = mela_stand(self)
+        forestry_centre_id = -1 if melaed.forestry_centre_id is None else melaed.forestry_centre_id
         return [
-            self.management_unit_id,
-            self.year,
-            self.area,
-            self.area_weight,
-            self.geo_location[0],
-            self.geo_location[1],
-            self.stand_id,
-            self.geo_location[2],
-            self.degree_days,
-            self.owner_category,
-            self.land_use_category,
-            self.soil_peatland_category,
-            self.site_type_category,
-            self.tax_class_reduction,
-            self.tax_class,
-            self.drainage_category,
-            self.drainage_feasibility,
+            melaed.management_unit_id,
+            melaed.year,
+            melaed.area,
+            melaed.area_weight,
+            melaed.geo_location[0],
+            melaed.geo_location[1],
+            melaed.stand_id,
+            melaed.geo_location[2],
+            melaed.degree_days,
+            melaed.owner_category,
+            melaed.land_use_category,
+            melaed.soil_peatland_category,
+            melaed.site_type_category,
+            melaed.tax_class_reduction,
+            melaed.tax_class,
+            melaed.drainage_category,
+            melaed.drainage_feasibility,
             None,
-            self.drainage_year,
-            self.fertilization_year,
-            self.soil_surface_preparation_year,
-            self.natural_regeneration_feasibility,
-            self.regeneration_area_cleaning_year,
-            self.development_class,
-            self.artificial_regeneration_year,
-            self.young_stand_tending_year,
-            self.pruning_year,
-            self.cutting_year,
+            melaed.drainage_year,
+            melaed.fertilization_year,
+            melaed.soil_surface_preparation_year,
+            melaed.natural_regeneration_feasibility,
+            melaed.regeneration_area_cleaning_year,
+            melaed.development_class,
+            melaed.artificial_regeneration_year,
+            melaed.young_stand_tending_year,
+            melaed.pruning_year,
+            melaed.cutting_year,
             forestry_centre_id,
-            self.forest_management_category,
-            self.method_of_last_cutting,
-            self.municipality_id,
+            melaed.forest_management_category,
+            melaed.method_of_last_cutting,
+            melaed.municipality_id,
             None,
             None
         ]
