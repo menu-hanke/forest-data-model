@@ -1,9 +1,11 @@
-from enum import Enum
+from enum import IntEnum
 
 
-class TreeSpecies(Enum):
+# IntEnum provides easy json serialisation
+class TreeSpecies(IntEnum):
     """This list is formed by combining VMI and Forest centre species 
-    and listing all the distinct ones"""
+    and listing all the distinct ones. UNKNOWN (38) is not part of either list, 
+    but can be assigned to in case the source data species is unexpected."""
     PINE = 1
     SPRUCE = 2
     SILVER_BIRCH = 3
@@ -41,3 +43,4 @@ class TreeSpecies(Enum):
     BAY_WILLOW = 35
     POPLAR = 36
     HAZEL = 37
+    UNKNOWN = 38

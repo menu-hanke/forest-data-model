@@ -67,4 +67,5 @@ vmi_to_internal = {
     VmiSpecies.BIRD_CHERRY: TreeSpecies.BIRD_CHERRY,
     VmiSpecies.MAPLE: TreeSpecies.MAPLE,
     VmiSpecies.HAZEL: TreeSpecies.HAZEL,
+    None: TreeSpecies.UNKNOWN,
 }
