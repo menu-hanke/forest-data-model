@@ -231,7 +231,7 @@ class ReferenceTree:
             -1 if self.saw_log_volume_reduction_factor is None else self.saw_log_volume_reduction_factor
         return [
             self.stems_per_ha,
-            self.species,
+            self.species.value,
             self.breast_height_diameter,
             self.height,
             self.breast_height_age,
