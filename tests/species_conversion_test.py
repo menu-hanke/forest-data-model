@@ -7,16 +7,16 @@ from forestdatamodel.conversion import species_conversions
 
 
 class TestConversion(test_util.ConverterTestSuite):
-    def test_convert_vmi_species_to_internal_species(self):
+    def test_convert_source_species_to_internal_species(self):
         assertions = [
-            (["A1"], TreeSpecies.SHORE_PINE)
-        ]
-        self.run_with_test_assertions(
-            assertions, species_conversions.vmi_to_internal)
+            #VMI
+            (["A9","VMI"], TreeSpecies.YEW),
+            (["A1","VMI"], TreeSpecies.SHORE_PINE),
+            (["0","VMI"], TreeSpecies.UNKNOWN),
 
-    def test_convert_fc_species_to_internal_species(self):
-        assertions = [
-            ([1], TreeSpecies.PINE)
+            #FFC
+            (["1","FFC"], TreeSpecies.PINE),
+            (["30","FFC"], TreeSpecies.UNKNOWN_DECIDUOUS),
         ]
         self.run_with_test_assertions(
-            assertions, species_conversions.fc_to_internal)
+            assertions, species_conversions.source_species_to_internal)

@@ -7,8 +7,3 @@ class ConverterTestSuite(unittest.TestCase):
         for case in assertions:
             result = fn(*case[0])
             self.assertEqual(case[1], result)
-
-    def assertions_should_raise_ValueError(self, assertions: typing.List[typing.Tuple], fn: typing.Callable):
-        for case in assertions:
-            result = fn(*case[0])
-            self.assertRaises(ValueError)
