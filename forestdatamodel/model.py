@@ -2,7 +2,8 @@ import dataclasses
 from enum import Enum
 from typing import Optional
 from dataclasses import dataclass
-from forestdatamodel.conversion.internal2mela import mela_stand, mela_tree
+from forestdatamodel.conversion.internal2mela import default_mela_tree_mappers, default_mela_stratum_mappers, default_mela_stand_mappers
+from forestdatamodel.conversion.util import apply_mappers
 
 
 @dataclass
@@ -40,6 +41,10 @@ class TreeStratum:
 
     def __eq__(self, other: 'TreeStratum'):
         return self.identifier == other.identifier
+
+    def as_mela_stratum(self) -> 'TreeStratum':
+        """Convert a TreeStratum so that enumerated category variables are converted to Mela value space"""
+        return apply_mappers(self, *default_mela_stratum_mappers)
 
     def has_height(self):
         if self.mean_height is None:
@@ -184,6 +189,10 @@ class ReferenceTree:
     def __eq__(self, other: 'ReferenceTree'):
         return self.identifier == other.identifier
 
+    def as_mela_tree(self) -> 'ReferenceTree':
+        """Convert a ReferenceTree so that enumerated category variables are converted to Mela value space"""
+        return apply_mappers(self, *default_mela_tree_mappers)
+
     def validate(self):
         pass
 
@@ -317,6 +326,13 @@ class ForestStand:
 
     def __eq__(self, other: 'ForestStand'):
         return self.identifier == other.identifier
+
+    def as_mela_stand(self) -> 'ForestStand':
+        apply_mappers(self, *default_mela_stand_mappers)
+        """Convert a ForestStand so that enumerated category variables are converted to Mela value space"""
+        self.reference_trees = list(map(lambda tree: tree.as_mela_tree(), self.reference_trees))
+        self.tree_strata = list(map(lambda stratum: stratum.as_mela_stratum(), self.tree_strata))
+        return self
 
     def set_identifiers(self, stand_id: int, management_unit_id: Optional[int] = None):
         self.stand_id = stand_id

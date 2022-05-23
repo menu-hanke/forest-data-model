@@ -1,5 +1,3 @@
-from typing import Callable
-from forestdatamodel import ReferenceTree, TreeStratum, ForestStand
 from forestdatamodel.enums.mela import MelaTreeSpecies
 from forestdatamodel.enums.internal import TreeSpecies
 
@@ -43,34 +41,23 @@ species_map = {
 }
 
 
-def species_mapper(target: ReferenceTree or TreeStratum) -> ReferenceTree or TreeStratum:
+def species_mapper(target):
     """in-place mapping from internal tree species to mela tree species"""
     target.species = species_map.get(target.species, MelaTreeSpecies.OTHER_DECIDUOUS)
     return target
 
 
-default_mappers = [species_mapper]
+default_mela_tree_mappers = [species_mapper]
+default_mela_stratum_mappers = [species_mapper]
+default_mela_stand_mappers = []
 
 
-def apply_mappers(target, *mappers: Callable):
-    """apply a list of mapper functions to a target object"""
-    for mapper in mappers:
-        target = mapper(target)
-    return target
 
 
-def mela_tree(tree: ReferenceTree) -> ReferenceTree:
-    """Convert a ReferenceTree so that enumerated category variables are converted to Mela value space"""
-    return apply_mappers(tree, *default_mappers)
 
 
-def mela_stratum(stratum: TreeStratum) -> TreeStratum:
-    """Convert a TreeStratum so that enumerated category variables are converted to Mela value space"""
-    return apply_mappers(stratum, *default_mappers)
 
 
-def mela_stand(stand: ForestStand) -> ForestStand:
-    """Convert a ForestStand so that enumerated category variables are converted to Mela value space"""
-    stand.reference_trees = list(map(mela_tree, stand.reference_trees))
-    stand.tree_strata = list(map(mela_stratum, stand.tree_strata))
-    return stand
+
+
+
