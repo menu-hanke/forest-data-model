@@ -32,8 +32,9 @@ class VmiSpecies(Enum):
     BIRD_CHERRY = "B8"
     MAPLE = "B9"
     HAZEL = "C1"
+    UNKNOWN = None
 
     @classmethod
     def _missing_(cls, name):
         if name == "0":
-            return None
+            return cls.UNKNOWN
