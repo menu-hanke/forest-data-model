@@ -21,8 +21,8 @@ class Internal2MelaTest(unittest.TestCase):
 
     def test_stand_conversion(self):
         fixture = ForestStand()
-        tree = ReferenceTree(species=TreeSpecies.SPRUCE)
-        stratum = TreeStratum(species=TreeSpecies.PINE)
+        tree = ReferenceTree(species=TreeSpecies.SPRUCE, stand=fixture)
+        stratum = TreeStratum(species=TreeSpecies.PINE, stand=fixture)
         fixture.reference_trees.append(tree)
         fixture.tree_strata.append(stratum)
         result = fixture.as_mela_stand()

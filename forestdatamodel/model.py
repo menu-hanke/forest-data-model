@@ -1,4 +1,5 @@
 import dataclasses
+from copy import copy, deepcopy
 from enum import Enum
 from typing import Optional
 from dataclasses import dataclass
@@ -43,8 +44,10 @@ class TreeStratum:
         return self.identifier == other.identifier
 
     def as_mela_stratum(self) -> 'TreeStratum':
+        result = copy(self)
+        result.stand_origin_relative_position = copy(self.stand_origin_relative_position)
         """Convert a TreeStratum so that enumerated category variables are converted to Mela value space"""
-        return apply_mappers(self, *default_mela_stratum_mappers)
+        return apply_mappers(result, *default_mela_stratum_mappers)
 
     def has_height(self):
         if self.mean_height is None:
@@ -190,8 +193,10 @@ class ReferenceTree:
         return self.identifier == other.identifier
 
     def as_mela_tree(self) -> 'ReferenceTree':
+        result = copy(self)
+        result.stand_origin_relative_position = copy(self.stand_origin_relative_position)
         """Convert a ReferenceTree so that enumerated category variables are converted to Mela value space"""
-        return apply_mappers(self, *default_mela_tree_mappers)
+        return apply_mappers(result, *default_mela_tree_mappers)
 
     def validate(self):
         pass
@@ -237,7 +242,7 @@ class ReferenceTree:
         return result
 
     def as_rsd_row(self):
-        melaed = mela_tree(self)
+        melaed = self.as_mela_tree()
         saw_log_volume_reduction_factor = \
             -1 if melaed.saw_log_volume_reduction_factor is None else melaed.saw_log_volume_reduction_factor
         return [
@@ -328,11 +333,18 @@ class ForestStand:
         return self.identifier == other.identifier
 
     def as_mela_stand(self) -> 'ForestStand':
-        apply_mappers(self, *default_mela_stand_mappers)
+        result = copy(self)
+        result.geo_location = copy(self.geo_location)
+        result.stems_per_ha_scaling_factors = copy(self.stems_per_ha_scaling_factors)
+        apply_mappers(result, *default_mela_stand_mappers)
         """Convert a ForestStand so that enumerated category variables are converted to Mela value space"""
-        self.reference_trees = list(map(lambda tree: tree.as_mela_tree(), self.reference_trees))
-        self.tree_strata = list(map(lambda stratum: stratum.as_mela_stratum(), self.tree_strata))
-        return self
+        result.reference_trees = list(map(lambda tree: tree.as_mela_tree(), result.reference_trees))
+        for tree in result.reference_trees:
+            tree.stand = result
+        result.tree_strata = list(map(lambda stratum: stratum.as_mela_stratum(), result.tree_strata))
+        for stratum in result.tree_strata:
+            stratum.stand = result
+        return result
 
     def set_identifiers(self, stand_id: int, management_unit_id: Optional[int] = None):
         self.stand_id = stand_id
@@ -378,7 +390,7 @@ class ForestStand:
         return result
 
     def as_rsd_row(self):
-        melaed = mela_stand(self)
+        melaed = self.as_mela_stand()
         forestry_centre_id = -1 if melaed.forestry_centre_id is None else melaed.forestry_centre_id
         return [
             melaed.management_unit_id,
