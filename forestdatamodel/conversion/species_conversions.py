@@ -2,7 +2,7 @@ from forestdatamodel.enums.forest_centre import ForestCentreSpecies
 from forestdatamodel.enums.vmi import VmiSpecies
 from forestdatamodel.enums.mela import MelaTreeSpecies
 from forestdatamodel.enums.internal import TreeSpecies
-from forestdatamodel.converters import mapping
+from forestdatamodel.conversion import mapping
 from enum import Enum
 
 

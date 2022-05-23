@@ -1,7 +1,7 @@
 from forestdatamodel.enums.internal import TreeSpecies
 from forestdatamodel.enums.vmi import VmiSpecies
 from tests import test_util
-from forestdatamodel.converters import species_conversions
+from forestdatamodel.conversion import species_conversions
 
 # testaa myös että väärä koodi palauttaa virheen
 
