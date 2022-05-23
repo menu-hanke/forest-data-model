@@ -2,9 +2,7 @@ import dataclasses
 from enum import Enum
 from typing import Optional
 from dataclasses import dataclass
-
 from forestdatamodel.conversion.internal2mela import mela_stand, mela_tree
-from forestdatamodel.enums.internal import TreeSpecies
 
 
 @dataclass

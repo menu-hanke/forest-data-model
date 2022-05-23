@@ -1,6 +1,4 @@
-from copy import deepcopy
 from typing import Callable
-
 from forestdatamodel import ReferenceTree, TreeStratum, ForestStand
 from forestdatamodel.enums.mela import MelaTreeSpecies
 from forestdatamodel.enums.internal import TreeSpecies
@@ -54,7 +52,7 @@ def species_mapper(target: ReferenceTree or TreeStratum) -> ReferenceTree or Tre
 default_mappers = [species_mapper]
 
 
-def apply_mappers(target, *mappers):
+def apply_mappers(target, *mappers: Callable):
     """apply a list of mapper functions to a target object"""
     for mapper in mappers:
         target = mapper(target)
