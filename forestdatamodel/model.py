@@ -44,9 +44,9 @@ class TreeStratum:
         return self.identifier == other.identifier
 
     def as_mela_stratum(self) -> 'TreeStratum':
+        """Convert a TreeStratum so that enumerated category variables are converted to Mela value space"""
         result = copy(self)
         result.stand_origin_relative_position = copy(self.stand_origin_relative_position)
-        """Convert a TreeStratum so that enumerated category variables are converted to Mela value space"""
         return apply_mappers(result, *default_mela_stratum_mappers)
 
     def has_height(self):
@@ -193,9 +193,9 @@ class ReferenceTree:
         return self.identifier == other.identifier
 
     def as_mela_tree(self) -> 'ReferenceTree':
+        """Convert a ReferenceTree so that enumerated category variables are converted to Mela value space"""
         result = copy(self)
         result.stand_origin_relative_position = copy(self.stand_origin_relative_position)
-        """Convert a ReferenceTree so that enumerated category variables are converted to Mela value space"""
         return apply_mappers(result, *default_mela_tree_mappers)
 
     def validate(self):
@@ -333,11 +333,11 @@ class ForestStand:
         return self.identifier == other.identifier
 
     def as_mela_stand(self) -> 'ForestStand':
+        """Convert a ForestStand so that enumerated category variables are converted to Mela value space"""
         result = copy(self)
         result.geo_location = copy(self.geo_location)
         result.stems_per_ha_scaling_factors = copy(self.stems_per_ha_scaling_factors)
         apply_mappers(result, *default_mela_stand_mappers)
-        """Convert a ForestStand so that enumerated category variables are converted to Mela value space"""
         result.reference_trees = list(map(lambda tree: tree.as_mela_tree(), result.reference_trees))
         for tree in result.reference_trees:
             tree.stand = result
