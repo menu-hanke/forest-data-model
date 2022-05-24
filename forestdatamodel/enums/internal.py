@@ -1,7 +1,5 @@
 from enum import IntEnum
 
-
-# IntEnum provides easy json serialisation
 class TreeSpecies(IntEnum):
     """This list is formed by combining VMI and Forest centre species 
     and listing all the distinct ones. UNKNOWN (38) is not part of either list, 
