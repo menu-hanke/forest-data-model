@@ -1,22 +1,21 @@
 from forestdatamodel.enums.internal import TreeSpecies
-from forestdatamodel.enums.vmi import VmiSpecies
 from tests import test_util
-from forestdatamodel.conversion import species_conversions
-
-# testaa myös että väärä koodi palauttaa virheen
-
+from forestdatamodel.conversion import fc2internal, vmi2internal
 
 class TestConversion(test_util.ConverterTestSuite):
-    def test_convert_source_species_to_internal_species(self):
+    def test_convert_VMI_species_to_internal_species(self):
         assertions = [
-            #VMI
-            (["A9","VMI"], TreeSpecies.YEW),
-            (["A1","VMI"], TreeSpecies.SHORE_PINE),
-            (["0","VMI"], TreeSpecies.UNKNOWN),
-
-            #FFC
-            (["1","FFC"], TreeSpecies.PINE),
-            (["30","FFC"], TreeSpecies.UNKNOWN_DECIDUOUS),
+            (["A9"], TreeSpecies.YEW),
+            (["A1"], TreeSpecies.SHORE_PINE),
+            (["0"], TreeSpecies.UNKNOWN),
         ]
         self.run_with_test_assertions(
-            assertions, species_conversions.source_species_to_internal)
+            assertions, vmi2internal.convert_species)
+
+    def test_convert_FC_species_to_internal_species(self):
+        assertions = [
+            (["1"], TreeSpecies.PINE),
+            (["30"], TreeSpecies.UNKNOWN_DECIDUOUS),
+        ]
+        self.run_with_test_assertions(
+            assertions, fc2internal.convert_species)
