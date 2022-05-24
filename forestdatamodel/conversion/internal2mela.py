@@ -74,7 +74,7 @@ def mela_stand(stand):
     result = copy(stand)
     result.geo_location = copy(stand.geo_location)
     result.stems_per_ha_scaling_factors = copy(stand.stems_per_ha_scaling_factors)
-    apply_mappers(result, *default_mela_stand_mappers)
+    result = apply_mappers(result, *default_mela_stand_mappers)
     result.reference_trees = list(map(mela_tree, result.reference_trees))
     for tree in result.reference_trees:
         tree.stand = result
