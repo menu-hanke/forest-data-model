@@ -1,5 +1,13 @@
+from copy import copy
 from forestdatamodel.enums.mela import MelaTreeSpecies
 from forestdatamodel.enums.internal import TreeSpecies
+from forestdatamodel.conversion.util import apply_mappers
+
+# TODO: can we find a way to resolve the circular import introduced by trying to use these classes just for typing?
+# Even using the iffing below, pytest fails during top_level_collect
+# if typing.TYPE_CHECKING:
+#    from forestdatamodel.model import ForestStand, TreeStratum, ReferenceTree
+
 
 species_map = {
     TreeSpecies.PINE: MelaTreeSpecies.SCOTS_PINE,
@@ -47,17 +55,35 @@ def species_mapper(target):
     return target
 
 
+def mela_stratum(stratum):
+    """Convert a TreeStratum so that enumerated category variables are converted to Mela value space"""
+    result = copy(stratum)
+    result.stand_origin_relative_position = copy(stratum.stand_origin_relative_position)
+    return apply_mappers(result, *default_mela_stratum_mappers)
+
+
+def mela_tree(tree):
+    """Convert a ReferenceTree so that enumerated category variables are converted to Mela value space"""
+    result = copy(tree)
+    result.stand_origin_relative_position = copy(tree.stand_origin_relative_position)
+    return apply_mappers(result, *default_mela_tree_mappers)
+
+
+def mela_stand(stand):
+    """Convert a ForestStand so that enumerated category variables are converted to Mela value space"""
+    result = copy(stand)
+    result.geo_location = copy(stand.geo_location)
+    result.stems_per_ha_scaling_factors = copy(stand.stems_per_ha_scaling_factors)
+    apply_mappers(result, *default_mela_stand_mappers)
+    result.reference_trees = list(map(mela_tree, result.reference_trees))
+    for tree in result.reference_trees:
+        tree.stand = result
+    result.tree_strata = list(map(mela_stratum, result.tree_strata))
+    for stratum in result.tree_strata:
+        stratum.stand = result
+    return result
+
+
 default_mela_tree_mappers = [species_mapper]
 default_mela_stratum_mappers = [species_mapper]
 default_mela_stand_mappers = []
-
-
-
-
-
-
-
-
-
-
-

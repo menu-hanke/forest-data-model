@@ -1,7 +1,7 @@
 import unittest
 
 from forestdatamodel import ReferenceTree, ForestStand, TreeStratum
-from forestdatamodel.conversion.internal2mela import species_mapper
+from forestdatamodel.conversion.internal2mela import species_mapper, mela_stand
 from forestdatamodel.enums.internal import TreeSpecies
 from forestdatamodel.enums.mela import MelaTreeSpecies
 
@@ -25,7 +25,6 @@ class Internal2MelaTest(unittest.TestCase):
         stratum = TreeStratum(species=TreeSpecies.PINE, stand=fixture)
         fixture.reference_trees.append(tree)
         fixture.tree_strata.append(stratum)
-        result = fixture.as_mela_stand()
+        result = mela_stand(fixture)
         self.assertEqual(MelaTreeSpecies.NORWAY_SPRUCE, result.reference_trees[0].species)
         self.assertEqual(MelaTreeSpecies.SCOTS_PINE, result.tree_strata[0].species)
-
