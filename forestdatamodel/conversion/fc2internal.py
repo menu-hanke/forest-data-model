@@ -1,9 +1,7 @@
 from forestdatamodel.enums.forest_centre import ForestCentreSpecies
-from forestdatamodel.enums.vmi import VmiSpecies
-from forestdatamodel.enums.mela import MelaTreeSpecies
 from forestdatamodel.enums.internal import TreeSpecies
 
-fc_to_internal = {
+species_map = {
     ForestCentreSpecies.PINE: TreeSpecies.PINE,
     ForestCentreSpecies.SPRUCE: TreeSpecies.SPRUCE,
     ForestCentreSpecies.SILVER_BIRCH: TreeSpecies.SILVER_BIRCH,
@@ -36,36 +34,7 @@ fc_to_internal = {
     ForestCentreSpecies.UNKNOWN_DECIDUOUS: TreeSpecies.UNKNOWN_DECIDUOUS,
 }
 
-vmi_to_internal = {
-    VmiSpecies.PINE: TreeSpecies.PINE,
-    VmiSpecies.SPRUCE: TreeSpecies.SPRUCE,
-    VmiSpecies.SILVER_BIRCH: TreeSpecies.SILVER_BIRCH,
-    VmiSpecies.DOWNY_BIRCH: TreeSpecies.DOWNY_BIRCH,
-    VmiSpecies.ASPEN: TreeSpecies.ASPEN,
-    VmiSpecies.GREY_ALDER: TreeSpecies.GREY_ALDER,
-    VmiSpecies.COMMON_ALDER: TreeSpecies.COMMON_ALDER,
-    VmiSpecies.MOUNTAIN_ASH: TreeSpecies.MOUNTAIN_ASH,
-    VmiSpecies.GOAT_WILLOW: TreeSpecies.GOAT_WILLOW,
-    VmiSpecies.OTHER_CONIFEROUS: TreeSpecies.OTHER_CONIFEROUS,
-    VmiSpecies.SHORE_PINE: TreeSpecies.SHORE_PINE,
-    VmiSpecies.KEDAR: TreeSpecies.KEDAR,
-    VmiSpecies.OTHER_PINE: TreeSpecies.OTHER_PINE,
-    VmiSpecies.LARCH: TreeSpecies.LARCH,
-    VmiSpecies.ABIES: TreeSpecies.ABIES,
-    VmiSpecies.OTHER_SPRUCE: TreeSpecies.OTHER_SPRUCE,
-    VmiSpecies.THUJA: TreeSpecies.THUJA,
-    VmiSpecies.JUNIPER: TreeSpecies.JUNIPER,
-    VmiSpecies.YEW: TreeSpecies.YEW,
-    VmiSpecies.OTHER_DECIDUOUS: TreeSpecies.OTHER_DECIDUOUS,
-    VmiSpecies.BAY_WILLOW: TreeSpecies.BAY_WILLOW,
-    VmiSpecies.EUROPEAN_WHITE_ELM: TreeSpecies.EUROPEAN_WHITE_ELM,
-    VmiSpecies.WYCH_ELM: TreeSpecies.WYCH_ELM,
-    VmiSpecies.SMALL_LEAVED_LIME: TreeSpecies.SMALL_LEAVED_LIME,
-    VmiSpecies.POPLAR: TreeSpecies.POPLAR,
-    VmiSpecies.COMMON_ASH: TreeSpecies.COMMON_ASH,
-    VmiSpecies.OAK: TreeSpecies.OAK,
-    VmiSpecies.BIRD_CHERRY: TreeSpecies.BIRD_CHERRY,
-    VmiSpecies.MAPLE: TreeSpecies.MAPLE,
-    VmiSpecies.HAZEL: TreeSpecies.HAZEL,
-    VmiSpecies.UNKNOWN: TreeSpecies.UNKNOWN,
-}
+def convert_species(species_code: str) -> TreeSpecies:
+    """Converts FC species code to internal TreeSpecies code"""
+    fc_species = ForestCentreSpecies(species_code)
+    return species_map.get(fc_species)
