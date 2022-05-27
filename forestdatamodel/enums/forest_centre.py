@@ -33,3 +33,8 @@ class ForestCentreSpecies(Enum):
     UNKNOWN_CONIFEROUS = '29'
     UNKNOWN_DECIDUOUS = '30'
 
+class ForestCentreOwnerCategory(Enum):
+    PRIVATE = "1"
+    FOREST_INDUSTRY = "2"
+    STATE = "3"
+    PUBLIC_CORPORATION = "4" #Julkisyhteisö

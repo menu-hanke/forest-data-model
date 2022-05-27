@@ -1,5 +1,5 @@
-from forestdatamodel.enums.forest_centre import ForestCentreSpecies
-from forestdatamodel.enums.internal import TreeSpecies
+from forestdatamodel.enums.forest_centre import ForestCentreOwnerCategory, ForestCentreSpecies
+from forestdatamodel.enums.internal import OwnerCategory, TreeSpecies
 
 species_map = {
     ForestCentreSpecies.PINE: TreeSpecies.PINE,
@@ -34,7 +34,19 @@ species_map = {
     ForestCentreSpecies.UNKNOWN_DECIDUOUS: TreeSpecies.UNKNOWN_DECIDUOUS,
 }
 
+owner_map = {
+    ForestCentreOwnerCategory.PRIVATE: OwnerCategory.PRIVATE,
+    ForestCentreOwnerCategory.FOREST_INDUSTRY: OwnerCategory.ENTERPRISE,
+    ForestCentreOwnerCategory.STATE: OwnerCategory.STATE,
+    ForestCentreOwnerCategory.PUBLIC_CORPORATION: OwnerCategory.PUBLIC_CORPORATION
+}
+
 def convert_species(species_code: str) -> TreeSpecies:
     """Converts FC species code to internal TreeSpecies code"""
     fc_species = ForestCentreSpecies(species_code)
     return species_map.get(fc_species)
+
+
+def convert_owner(owner_code: str) -> OwnerCategory:
+    fc_owner = ForestCentreOwnerCategory(owner_code)
+    return owner_map.get(fc_owner)

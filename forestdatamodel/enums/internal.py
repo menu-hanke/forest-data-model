@@ -1,4 +1,4 @@
-from enum import IntEnum
+from enum import IntEnum, Enum
 
 class TreeSpecies(IntEnum):
     """This list is formed by combining VMI and Forest centre species 
@@ -42,3 +42,9 @@ class TreeSpecies(IntEnum):
     POPLAR = 36
     HAZEL = 37
     UNKNOWN = 38
+
+class OwnerCategory(Enum):
+    PRIVATE = 1
+    ENTERPRISE = 2
+    STATE = 3
+    PUBLIC_CORPORATION = 4
