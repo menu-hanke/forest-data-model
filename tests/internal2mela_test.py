@@ -1,6 +1,6 @@
 import unittest
 
-from forestdatamodel import ReferenceTree, ForestStand, TreeStratum
+from forestdatamodel.model import ReferenceTree, ForestStand, TreeStratum
 from forestdatamodel.conversion.internal2mela import species_mapper, mela_stand
 from forestdatamodel.enums.internal import TreeSpecies
 from forestdatamodel.enums.mela import MelaTreeSpecies
