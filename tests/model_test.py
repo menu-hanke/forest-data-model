@@ -1,6 +1,6 @@
 import unittest
 
-from forestdatamodel import ForestStand, ReferenceTree, TreeStratum
+from forestdatamodel.model import ForestStand, ReferenceTree, TreeStratum
 
 
 class TestForestDataModel(unittest.TestCase):
