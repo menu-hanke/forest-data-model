@@ -2,8 +2,8 @@ import unittest
 
 from forestdatamodel import ReferenceTree, ForestStand, TreeStratum
 from forestdatamodel.conversion.internal2mela import species_mapper, mela_stand
-from forestdatamodel.enums.internal import TreeSpecies
-from forestdatamodel.enums.mela import MelaTreeSpecies
+from forestdatamodel.enums.internal import OwnerCategory, TreeSpecies
+from forestdatamodel.enums.mela import MelaOwnerCategory, MelaTreeSpecies
 
 
 class Internal2MelaTest(unittest.TestCase):
@@ -28,3 +28,9 @@ class Internal2MelaTest(unittest.TestCase):
         result = mela_stand(fixture)
         self.assertEqual(MelaTreeSpecies.NORWAY_SPRUCE, result.reference_trees[0].species)
         self.assertEqual(MelaTreeSpecies.SCOTS_PINE, result.tree_strata[0].species)
+
+    def test_owner_category(self):
+        fixture = ForestStand()
+        fixture.owner_category = OwnerCategory.METSAHALLITUS
+        result = mela_stand(fixture)
+        self.assertEqual(MelaOwnerCategory.STATE, result.owner_category)
