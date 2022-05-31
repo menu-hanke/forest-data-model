@@ -37,4 +37,4 @@ class ForestCentreOwnerCategory(Enum):
     PRIVATE = "1"
     FOREST_INDUSTRY = "2"
     STATE = "3"
-    PUBLIC_CORPORATION = "4" #Julkisyhteisö
+    JULKISYHTEISO = "4"

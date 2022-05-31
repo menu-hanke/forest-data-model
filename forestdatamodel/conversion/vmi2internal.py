@@ -36,16 +36,17 @@ species_map = {
 }
 
 owner_map = {
+    VmiOwnerCategory.UNKNOWN: OwnerCategory.UNKNOWN,
     VmiOwnerCategory.PRIVATE: OwnerCategory.PRIVATE,
-    VmiOwnerCategory.FOREST_INDUSTRY_ENTERPRISE: OwnerCategory.ENTERPRISE,
-    VmiOwnerCategory.OTHER_ENTERPRISE: OwnerCategory.ENTERPRISE,
-    VmiOwnerCategory.METSAHALLITUS: OwnerCategory.STATE,
-    VmiOwnerCategory.OTHER_STATE_AGENCY: OwnerCategory.STATE,
-    VmiOwnerCategory.FOREST_COOP: OwnerCategory.PUBLIC_CORPORATION,
-    VmiOwnerCategory.MUNICIPALITY: OwnerCategory.PUBLIC_CORPORATION,
-    VmiOwnerCategory.CONGREGATION: OwnerCategory.PUBLIC_CORPORATION,
-    VmiOwnerCategory.OTHER_COMMUNITY: OwnerCategory.PUBLIC_CORPORATION,
-    VmiOwnerCategory.UNDIVIDED: OwnerCategory.PUBLIC_CORPORATION
+    VmiOwnerCategory.FOREST_INDUSTRY_ENTERPRISE: OwnerCategory.FOREST_INDUSTRY,
+    VmiOwnerCategory.OTHER_ENTERPRISE: OwnerCategory.OTHER_ENTERPRISE,
+    VmiOwnerCategory.METSAHALLITUS: OwnerCategory.METSAHALLITUS,
+    VmiOwnerCategory.OTHER_STATE_AGENCY: OwnerCategory.OTHER_STATE_AGENCY,
+    VmiOwnerCategory.FOREST_COOP: OwnerCategory.FOREST_COOP,
+    VmiOwnerCategory.MUNICIPALITY: OwnerCategory.MUNICIPALITY,
+    VmiOwnerCategory.CONGREGATION: OwnerCategory.CONGREGATION,
+    VmiOwnerCategory.OTHER_COMMUNITY: OwnerCategory.OTHER_COMMUNITY,
+    VmiOwnerCategory.UNDIVIDED: OwnerCategory.UNDIVIDED
 }
 
 def convert_species(species_code: str) -> TreeSpecies:

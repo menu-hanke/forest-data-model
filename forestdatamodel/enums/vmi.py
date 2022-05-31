@@ -41,6 +41,7 @@ class VmiSpecies(Enum):
 
 
 class VmiOwnerCategory(Enum):
+    UNKNOWN = "0"
     #private
     PRIVATE = "1"
     #enterprise
@@ -56,3 +57,4 @@ class VmiOwnerCategory(Enum):
     OTHER_COMMUNITY = "9"
     #jakamaton 
     UNDIVIDED = "A" # = jakamaton kuolinpesä
+

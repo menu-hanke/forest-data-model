@@ -36,9 +36,9 @@ species_map = {
 
 owner_map = {
     ForestCentreOwnerCategory.PRIVATE: OwnerCategory.PRIVATE,
-    ForestCentreOwnerCategory.FOREST_INDUSTRY: OwnerCategory.ENTERPRISE,
-    ForestCentreOwnerCategory.STATE: OwnerCategory.STATE,
-    ForestCentreOwnerCategory.PUBLIC_CORPORATION: OwnerCategory.PUBLIC_CORPORATION
+    ForestCentreOwnerCategory.FOREST_INDUSTRY: OwnerCategory.FOREST_INDUSTRY,
+    ForestCentreOwnerCategory.STATE: OwnerCategory.OTHER_STATE_AGENCY,
+    ForestCentreOwnerCategory.JULKISYHTEISO: OwnerCategory.OTHER_COMMUNITY
 }
 
 def convert_species(species_code: str) -> TreeSpecies:

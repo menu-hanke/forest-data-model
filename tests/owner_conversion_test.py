@@ -6,8 +6,8 @@ class TestConversion(test_util.ConverterTestSuite):
     def test_convert_VMI_owner_to_internal(self):
         assertions = [
             (["1"], OwnerCategory.PRIVATE),
-            (["2"], OwnerCategory.ENTERPRISE),
-            (["A"], OwnerCategory.PUBLIC_CORPORATION)
+            (["2"], OwnerCategory.FOREST_INDUSTRY),
+            (["A"], OwnerCategory.UNDIVIDED)
         ]
 
         self.run_with_test_assertions(
@@ -17,8 +17,8 @@ class TestConversion(test_util.ConverterTestSuite):
     def test_convert_FFC_owner_to_internal(self):
         assertions = [
             (["1"], OwnerCategory.PRIVATE),
-            (["2"], OwnerCategory.ENTERPRISE),
-            (["4"], OwnerCategory.PUBLIC_CORPORATION)
+            (["2"], OwnerCategory.FOREST_INDUSTRY),
+            (["4"], OwnerCategory.OTHER_COMMUNITY)
         ]
 
         self.run_with_test_assertions(
