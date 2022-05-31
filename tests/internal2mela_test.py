@@ -34,3 +34,10 @@ class Internal2MelaTest(unittest.TestCase):
         fixture.owner_category = OwnerCategory.METSAHALLITUS
         result = mela_stand(fixture)
         self.assertEqual(MelaOwnerCategory.STATE, result.owner_category)
+
+        #ownerCategory UNKNOWN should convert to MelaOwnerCategory PRIVATE
+        fixture2 = ForestStand()
+        fixture2.owner_category = OwnerCategory.UNKNOWN
+        result = mela_stand(fixture2)
+        self.assertEqual(MelaOwnerCategory.PRIVATE, result.owner_category)
+   

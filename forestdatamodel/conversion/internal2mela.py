@@ -49,6 +49,7 @@ species_map = {
 }
 
 owner_map = {
+    OwnerCategory.UNKNOWN: MelaOwnerCategory.PRIVATE,
     OwnerCategory.PRIVATE: MelaOwnerCategory.PRIVATE,
     OwnerCategory.FOREST_INDUSTRY: MelaOwnerCategory.ENTERPRISE,
     OwnerCategory.OTHER_ENTERPRISE: MelaOwnerCategory.ENTERPRISE,
