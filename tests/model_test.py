@@ -5,6 +5,28 @@ from forestdatamodel.model import ForestStand, ReferenceTree, TreeStratum
 
 class TestForestDataModel(unittest.TestCase):
 
+    def test_calculate_dominant_height(self):
+        stems = [
+            [82, 30],
+            [13, 51]
+        ]
+        diameters = [
+            [18.1, 5.7],
+            [50.1, 35.9]
+        ]
+        assertions = [
+            # over 100 stems
+            ([diameters[0], stems[0]], 15.868),
+            # under 100 stems
+            ([diameters[1], stems[1]], 38.784375),
+        ]
+        for i in assertions:
+            stand = ForestStand()
+            fixtures = [ReferenceTree(breast_height_diameter=d, stems_per_ha=w) for d, w in zip(i[0][0], i[0][1])]
+            stand.reference_trees = fixtures
+            result = stand.calculate_dominant_height()
+            self.assertEqual(i[1], result)
+
     def test_has_sapling_stems_per_ha(self):
         fixture = TreeStratum()
         assertions = [

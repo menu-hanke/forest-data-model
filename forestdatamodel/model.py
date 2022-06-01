@@ -279,7 +279,7 @@ class ForestStand:
     geo_location: Optional[tuple[float, float, float, str]] = None
 
     degree_days: Optional[float] = None  # RSD record 9
-    owner_category: Optional[int] = None  # RSD record 10, 0-4
+    owner_category: Optional[Enum] = None  # RSD record 10, 0-4
     land_use_category: Optional[int] = None  # RSD record 11, 1-9
     soil_peatland_category: Optional[int] = None  # RSD record 12, 1-5
     site_type_category: Optional[int] = None  # RSD record 13, 1-8
@@ -355,6 +355,24 @@ class ForestStand:
 
     def has_strata(self):
         return len(self.tree_strata) > 0
+
+    def calculate_dominant_height(self, c: int = 100):
+        """ Calculate weighted average of 100 largest stems (100 by default) """
+        sorted_trees = sorted(self.reference_trees, key=lambda rt: rt.breast_height_diameter, reverse=True)
+        dw_sum, n = 0, 0
+        for rt in sorted_trees:
+            d = rt.breast_height_diameter
+            w = rt.stems_per_ha
+            if n + w >= c:
+                wn = (c - n) # notice only portion of stems as last weight
+                dw_sum += d * wn
+                n = c
+                break
+            # weighted sum
+            dw_sum += d * w
+            n += w
+        # average of weighted sums
+        return dw_sum / n if n > 0 else 0
 
     def as_csv_row(self) -> list[str]:
         result = ["stand", self.identifier]

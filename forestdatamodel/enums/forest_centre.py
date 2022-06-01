@@ -42,3 +42,8 @@ class ForestCentreLandUseCategory(Enum):
     REAL_ESTATE = '5'
     OTHER_LAND = '7'
     WATER_BODY = '8'
+class ForestCentreOwnerCategory(Enum):
+    PRIVATE = "1"
+    FOREST_INDUSTRY = "2"
+    STATE = "3"
+    JULKISYHTEISO = "4"

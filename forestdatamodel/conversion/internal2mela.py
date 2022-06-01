@@ -1,6 +1,6 @@
 from copy import copy
-from forestdatamodel.enums.mela import MelaLandUseCategory, MelaOwnerCategory, MelaSoilAndPeatlandCategory, MelaTreeSpecies
-from forestdatamodel.enums.internal import LandUseCategory, TreeSpecies
+from forestdatamodel.enums.mela import MelaOwnerCategory, MelaTreeSpecies, MelaLandUseCategory
+from forestdatamodel.enums.internal import TreeSpecies, OwnerCategory, LandUseCategory
 from forestdatamodel.conversion.util import apply_mappers
 
 # TODO: can we find a way to resolve the circular import introduced by trying to use these classes just for typing?
@@ -64,12 +64,31 @@ land_use_map = {
     LandUseCategory.WATER_BODY: MelaLandUseCategory.LAKES_AND_RIVERS
 }
 
+owner_map = {
+    OwnerCategory.UNKNOWN: MelaOwnerCategory.PRIVATE,
+    OwnerCategory.PRIVATE: MelaOwnerCategory.PRIVATE,
+    OwnerCategory.FOREST_INDUSTRY: MelaOwnerCategory.ENTERPRISE,
+    OwnerCategory.OTHER_ENTERPRISE: MelaOwnerCategory.ENTERPRISE,
+    OwnerCategory.METSAHALLITUS: MelaOwnerCategory.STATE,
+    OwnerCategory.OTHER_STATE_AGENCY: MelaOwnerCategory.STATE,
+    OwnerCategory.FOREST_COOP: MelaOwnerCategory.COMMUNITY,
+    OwnerCategory.MUNICIPALITY: MelaOwnerCategory.MUNICIPALITY,
+    OwnerCategory.CONGREGATION: MelaOwnerCategory.COMMUNITY,
+    OwnerCategory.OTHER_COMMUNITY: MelaOwnerCategory.COMMUNITY,
+    OwnerCategory.UNDIVIDED: MelaOwnerCategory.COMMUNITY
+}
+
 def land_use_mapper(target):
     """in-place mapping from internal LandUseCategory to MelaLandUseCategory"""
     target.land_use_category = land_use_map.get(target.land_use_category)
     return target
 
 
+
+def owner_mapper(target):
+    """in-place mapping from internal land owner category to mela owner category"""
+    target.owner_category = owner_map.get(target.owner_category)
+    return target
 
 def species_mapper(target):
     """in-place mapping from internal tree species to mela tree species"""
@@ -108,4 +127,4 @@ def mela_stand(stand):
 
 default_mela_tree_mappers = [species_mapper]
 default_mela_stratum_mappers = [species_mapper]
-default_mela_stand_mappers = []
+default_mela_stand_mappers = [owner_mapper, land_use_mapper]
