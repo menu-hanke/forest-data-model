@@ -1,5 +1,5 @@
-from forestdatamodel.enums.vmi import VmiSpecies
-from forestdatamodel.enums.internal import TreeSpecies
+from forestdatamodel.enums.vmi import VmiOwnerCategory, VmiSpecies
+from forestdatamodel.enums.internal import OwnerCategory, TreeSpecies
 
 species_map = {
     VmiSpecies.PINE: TreeSpecies.PINE,
@@ -35,8 +35,26 @@ species_map = {
     VmiSpecies.UNKNOWN: TreeSpecies.UNKNOWN,
 }
 
+owner_map = {
+    VmiOwnerCategory.UNKNOWN: OwnerCategory.UNKNOWN,
+    VmiOwnerCategory.PRIVATE: OwnerCategory.PRIVATE,
+    VmiOwnerCategory.FOREST_INDUSTRY_ENTERPRISE: OwnerCategory.FOREST_INDUSTRY,
+    VmiOwnerCategory.OTHER_ENTERPRISE: OwnerCategory.OTHER_ENTERPRISE,
+    VmiOwnerCategory.METSAHALLITUS: OwnerCategory.METSAHALLITUS,
+    VmiOwnerCategory.OTHER_STATE_AGENCY: OwnerCategory.OTHER_STATE_AGENCY,
+    VmiOwnerCategory.FOREST_COOP: OwnerCategory.FOREST_COOP,
+    VmiOwnerCategory.MUNICIPALITY: OwnerCategory.MUNICIPALITY,
+    VmiOwnerCategory.CONGREGATION: OwnerCategory.CONGREGATION,
+    VmiOwnerCategory.OTHER_COMMUNITY: OwnerCategory.OTHER_COMMUNITY,
+    VmiOwnerCategory.UNDIVIDED: OwnerCategory.UNDIVIDED
+}
+
 def convert_species(species_code: str) -> TreeSpecies:
     """Converts VMI species code to internal TreeSpecies code"""
     value = species_code.strip()
     vmi_species = VmiSpecies(value)
     return species_map.get(vmi_species)
+
+def convert_owner(owner_code: str) -> OwnerCategory:
+    vmi_owner = VmiOwnerCategory(owner_code)
+    return owner_map.get(vmi_owner)

@@ -38,3 +38,23 @@ class VmiSpecies(Enum):
     def _missing_(cls, name):
         if name == "0":
             return cls.UNKNOWN
+
+
+class VmiOwnerCategory(Enum):
+    UNKNOWN = "0"
+    #private
+    PRIVATE = "1"
+    #enterprise
+    FOREST_INDUSTRY_ENTERPRISE = "2"
+    OTHER_ENTERPRISE = "3"
+    #state forest
+    METSAHALLITUS = "4" 
+    OTHER_STATE_AGENCY = "5"
+    #communities
+    FOREST_COOP = "6" # = yhteismetsä
+    MUNICIPALITY = "7"
+    CONGREGATION = "8"
+    OTHER_COMMUNITY = "9"
+    #jakamaton 
+    UNDIVIDED = "A" # = jakamaton kuolinpesä
+
