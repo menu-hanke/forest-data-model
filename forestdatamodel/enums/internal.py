@@ -69,3 +69,11 @@ class OwnerCategory(Enum):
     CONGREGATION = 8
     OTHER_COMMUNITY = 9
     UNDIVIDED = 10
+
+class SoilPeatlandCategory(Enum):
+    MINERAL_SOIL = 1 # kangas
+    SPRUCE_MIRE = 2 # korpi
+    PINE_MIRE = 3 # räme
+    BARREN_TREELESS_MIRE = 4 # neva
+    RICH_TREELESS_MIRE = 5 # letto
+    UNSPECIFIED_TREELESS_MIRE = 6 # VMI "avosuo"

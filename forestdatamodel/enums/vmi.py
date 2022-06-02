@@ -69,3 +69,9 @@ class VmiOwnerCategory(Enum):
     #jakamaton 
     UNDIVIDED = "A" # = jakamaton kuolinpesä
 
+class VmiSoilPeatlandCategory(Enum):
+    MINERAL_SOIL = '1'
+    SPRUCE_MIRE = '2'
+    PINE_MIRE = '3'
+    TREELESS_MIRE = '4'
+

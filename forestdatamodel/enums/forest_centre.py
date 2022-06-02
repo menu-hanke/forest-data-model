@@ -47,3 +47,10 @@ class ForestCentreOwnerCategory(Enum):
     FOREST_INDUSTRY = "2"
     STATE = "3"
     JULKISYHTEISO = "4"
+
+class ForestCentreSoilPeatlandCategory(Enum):
+    MINERAL_SOIL = '1'
+    SPRUCE_MIRE = '2'
+    PINE_MIRE = '3'
+    BARREN_TREELESS_MIRE = '4'
+    RICH_TREELESS_MIRE = '5'
