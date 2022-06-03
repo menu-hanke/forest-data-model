@@ -1,6 +1,6 @@
 from copy import copy
-from forestdatamodel.enums.mela import MelaOwnerCategory, MelaTreeSpecies
-from forestdatamodel.enums.internal import TreeSpecies, OwnerCategory
+from forestdatamodel.enums.mela import MelaOwnerCategory, MelaTreeSpecies, MelaLandUseCategory
+from forestdatamodel.enums.internal import TreeSpecies, OwnerCategory, LandUseCategory
 from forestdatamodel.conversion.util import apply_mappers
 
 # TODO: can we find a way to resolve the circular import introduced by trying to use these classes just for typing?
@@ -48,6 +48,22 @@ species_map = {
     TreeSpecies.HAZEL: MelaTreeSpecies.OTHER_DECIDUOUS
 }
 
+land_use_map = {
+    LandUseCategory.FOREST: MelaLandUseCategory.FOREST_LAND,
+    LandUseCategory.SCRUB_LAND: MelaLandUseCategory.SCRUB_LAND,
+    LandUseCategory.WASTE_LAND: MelaLandUseCategory.WASTE_LAND,
+    LandUseCategory.OTHER_FOREST: MelaLandUseCategory.OTHER,
+    LandUseCategory.AGRICULTURAL: MelaLandUseCategory.AGRICULTURAL_LAND,
+    LandUseCategory.BUILT_LAND: MelaLandUseCategory.BUILT_UP_LAND,
+    LandUseCategory.ROAD: MelaLandUseCategory.ROADS_OR_ELECTRIC_LINES,
+    LandUseCategory.ENERGY_TRANSMISSION_LINE: MelaLandUseCategory.ROADS_OR_ELECTRIC_LINES,
+    LandUseCategory.FRESHWATER: MelaLandUseCategory.LAKES_AND_RIVERS,
+    LandUseCategory.SEA: MelaLandUseCategory.SEA,
+    LandUseCategory.REAL_ESTATE: MelaLandUseCategory.BUILT_UP_LAND,
+    LandUseCategory.OTHER_LAND: MelaLandUseCategory.ROADS_OR_ELECTRIC_LINES,
+    LandUseCategory.WATER_BODY: MelaLandUseCategory.LAKES_AND_RIVERS
+}
+
 owner_map = {
     OwnerCategory.UNKNOWN: MelaOwnerCategory.PRIVATE,
     OwnerCategory.PRIVATE: MelaOwnerCategory.PRIVATE,
@@ -61,6 +77,13 @@ owner_map = {
     OwnerCategory.OTHER_COMMUNITY: MelaOwnerCategory.COMMUNITY,
     OwnerCategory.UNDIVIDED: MelaOwnerCategory.COMMUNITY
 }
+
+def land_use_mapper(target):
+    """in-place mapping from internal LandUseCategory to MelaLandUseCategory"""
+    target.land_use_category = land_use_map.get(target.land_use_category)
+    return target
+
+
 
 def owner_mapper(target):
     """in-place mapping from internal land owner category to mela owner category"""
@@ -104,4 +127,4 @@ def mela_stand(stand):
 
 default_mela_tree_mappers = [species_mapper]
 default_mela_stratum_mappers = [species_mapper]
-default_mela_stand_mappers = [owner_mapper]
+default_mela_stand_mappers = [owner_mapper, land_use_mapper]

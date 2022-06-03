@@ -1,5 +1,5 @@
-from forestdatamodel.enums.vmi import VmiOwnerCategory, VmiSpecies
-from forestdatamodel.enums.internal import OwnerCategory, TreeSpecies
+from forestdatamodel.enums.vmi import VmiOwnerCategory, VmiSpecies, VmiLandUseCategory
+from forestdatamodel.enums.internal import OwnerCategory, TreeSpecies, LandUseCategory
 
 species_map = {
     VmiSpecies.PINE: TreeSpecies.PINE,
@@ -35,6 +35,19 @@ species_map = {
     VmiSpecies.UNKNOWN: TreeSpecies.UNKNOWN,
 }
 
+land_use_map = {
+    VmiLandUseCategory.FOREST: LandUseCategory.FOREST,
+    VmiLandUseCategory.SCRUB_LAND: LandUseCategory.SCRUB_LAND,
+    VmiLandUseCategory.WASTE_LAND: LandUseCategory.WASTE_LAND,
+    VmiLandUseCategory.OTHER_FOREST: LandUseCategory.OTHER_FOREST,
+    VmiLandUseCategory.AGRICULTURAL: LandUseCategory.AGRICULTURAL,
+    VmiLandUseCategory.BUILT_LAND: LandUseCategory.BUILT_LAND,
+    VmiLandUseCategory.ROAD: LandUseCategory.ROAD,
+    VmiLandUseCategory.ENERGY_TRANSMISSION_LINE: LandUseCategory.ENERGY_TRANSMISSION_LINE,
+    VmiLandUseCategory.FRESHWATER: LandUseCategory.FRESHWATER,
+    VmiLandUseCategory.SEA: LandUseCategory.SEA
+}
+
 owner_map = {
     VmiOwnerCategory.UNKNOWN: OwnerCategory.UNKNOWN,
     VmiOwnerCategory.PRIVATE: OwnerCategory.PRIVATE,
@@ -48,6 +61,13 @@ owner_map = {
     VmiOwnerCategory.OTHER_COMMUNITY: OwnerCategory.OTHER_COMMUNITY,
     VmiOwnerCategory.UNDIVIDED: OwnerCategory.UNDIVIDED
 }
+
+def convert_land_use_category(lu_code: str) -> LandUseCategory:
+    """sanitization of lu_code is the responsibility of the caller, 
+    meaning that this conversion will fail e.g. if the parameter is a lower-case letter."""
+    vmi_category = VmiLandUseCategory(lu_code)
+    return land_use_map.get(vmi_category)
+
 
 def convert_species(species_code: str) -> TreeSpecies:
     """Converts VMI species code to internal TreeSpecies code"""
