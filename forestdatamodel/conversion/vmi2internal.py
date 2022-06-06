@@ -1,5 +1,5 @@
-from forestdatamodel.enums.vmi import VmiOwnerCategory, VmiSoilPeatlandCategory, VmiSpecies, VmiLandUseCategory
-from forestdatamodel.enums.internal import OwnerCategory, SoilPeatlandCategory, TreeSpecies, LandUseCategory
+from forestdatamodel.enums.vmi import VmiSiteType, VmiOwnerCategory, VmiSoilPeatlandCategory, VmiSpecies, VmiLandUseCategory
+from forestdatamodel.enums.internal import SiteType, OwnerCategory, SoilPeatlandCategory, TreeSpecies, LandUseCategory
 
 __species_map = {
     VmiSpecies.PINE: TreeSpecies.PINE,
@@ -68,6 +68,23 @@ __soil_peatland_map = {
     VmiSoilPeatlandCategory.PINE_MIRE: SoilPeatlandCategory.PINE_MIRE,
     VmiSoilPeatlandCategory.TREELESS_MIRE: SoilPeatlandCategory.UNSPECIFIED_TREELESS_MIRE,
 }
+
+__site_type_map = {
+    VmiSiteType.LEHTO: SiteType.VERY_RICH_SITE,
+    VmiSiteType.LEHTOMAINEN_KANGAS: SiteType.RICH_SITE,
+    VmiSiteType.TUOREKANGAS: SiteType.DAMP_SITE,
+    VmiSiteType.KUIVAHKOKANGAS: SiteType.SUB_DRY_SITE,
+    VmiSiteType.KUIVAKANGAS: SiteType.DRY_SITE,
+    VmiSiteType.KARUKKOKANGAS: SiteType.BARREN_SITE,
+    VmiSiteType.KALLIOMAA_TAI_HIETIKKO: SiteType.ROCKY_OR_SANDY_AREA,
+    VmiSiteType.LAKIMETSA_TAI_TUNTURIHAVUMETSA: SiteType.LAKIMETSA_TAI_TUNTURIHAVUMETSA,
+    VmiSiteType.TUNTURIKOIVIKKO: SiteType.TUNTURIKOIVIKKO,
+    VmiSiteType.AVOTUNTURI: SiteType.OPEN_MOUNTAINS
+}
+
+def convert_site_type_category(code: str) -> SiteType:
+    value = VmiSiteType(code)
+    return __site_type_map.get(value)
 
 def convert_soil_peatland_category(sp_code: str) -> LandUseCategory:
     vmi_category = VmiSoilPeatlandCategory(sp_code)
