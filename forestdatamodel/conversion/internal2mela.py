@@ -90,12 +90,11 @@ __site_type_map = {
     SiteType.LAKIMETSA_TAI_TUNTURIHAVUMETSA: MelaSiteTypeCategory.OPEN_MOUNTAINS
 }
 
+#this doesn't have a mapping for TREELESS_MIRE, as its mapping to MELA values is determined by the SiteType category. 
 __soil_peatland_map = {
     SoilPeatlandCategory.MINERAL_SOIL: MelaSoilAndPeatlandCategory.MINERAL_SOIL,
     SoilPeatlandCategory.SPRUCE_MIRE: MelaSoilAndPeatlandCategory.PEATLAND_SPRUCE_MIRE,
     SoilPeatlandCategory.PINE_MIRE: MelaSoilAndPeatlandCategory.PEATLAND_PINE_MIRE,
-    SoilPeatlandCategory.BARREN_TREELESS_MIRE: MelaSoilAndPeatlandCategory.PEATLAND_BARREN_TREELESS_MIRE,
-    SoilPeatlandCategory.RICH_TREELESS_MIRE: MelaSoilAndPeatlandCategory.PEATLAND_RICH_TREELESS_MIRE,
 }
 
 __mela_rich_mire_types = [
@@ -109,22 +108,20 @@ def site_type_mapper(target):
     return target
 
 def soil_peatland_mapper(target):
-    """determining the soil or peatland type requires knowing the site type (fertility type).
-    Make sure to set it first, because if it's not set for the target object, this method will raise an exception.
+    """If the internal SoilPeatlandCategory is TREELESS_MIRE, determining the soil or peatland type for MELA requires knowing the site type (fertility type).
+    Make sure to set it first, because otherwise this method is unable to determine soil_peatland_category and sets it to None.
     """
 
-    #UNSPECIFIED_TREELESS_MIRE (only exists for VMI data) can be either rich (letto) or barren (neva).
-    #Thus, the MELA soil/peatland type can be deduced with the information about the site type:
-    if target.soil_peatland_category == SoilPeatlandCategory.UNSPECIFIED_TREELESS_MIRE:
+    if target.soil_peatland_category == SoilPeatlandCategory.TREELESS_MIRE:
         if target.site_type_category is None:
-            raise TypeError 
-        #note that the comparision needs to be done against mela site type because it is converted to it above.
+            target.soil_peatland_category = None
+            return target
+
         if target.site_type_category in __mela_rich_mire_types:
             target.soil_peatland_category = MelaSoilAndPeatlandCategory.PEATLAND_RICH_TREELESS_MIRE
         else:
             target.soil_peatland_category = MelaSoilAndPeatlandCategory.PEATLAND_BARREN_TREELESS_MIRE
 
-    #if we're _not_ dealing with a VMI UNSPECIFIED_TREELESS_MIRE, the conversion is unambiguous and map 1:1 with corresponding MELA categories without the knowledge of the site type.
     else: 
         target.soil_peatland_category = __soil_peatland_map.get(target.soil_peatland_category)
     
