@@ -115,13 +115,12 @@ def soil_peatland_mapper(target):
     if target.soil_peatland_category == SoilPeatlandCategory.TREELESS_MIRE:
         if target.site_type_category is None:
             target.soil_peatland_category = None
-            return target
 
-        if target.site_type_category in __mela_rich_mire_types:
+        elif target.site_type_category in __mela_rich_mire_types:
             target.soil_peatland_category = MelaSoilAndPeatlandCategory.PEATLAND_RICH_TREELESS_MIRE
+        
         else:
             target.soil_peatland_category = MelaSoilAndPeatlandCategory.PEATLAND_BARREN_TREELESS_MIRE
-
     else: 
         target.soil_peatland_category = __soil_peatland_map.get(target.soil_peatland_category)
     
