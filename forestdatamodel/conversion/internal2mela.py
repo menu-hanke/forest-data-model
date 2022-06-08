@@ -1,8 +1,7 @@
 from copy import copy
-from forestdatamodel.enums.mela import MelaOwnerCategory, MelaTreeSpecies, MelaLandUseCategory
-from forestdatamodel.enums.internal import TreeSpecies, OwnerCategory, LandUseCategory
+from forestdatamodel.enums.mela import MelaOwnerCategory, MelaSiteTypeCategory, MelaSoilAndPeatlandCategory, MelaTreeSpecies, MelaLandUseCategory
+from forestdatamodel.enums.internal import SiteType, SoilPeatlandCategory, TreeSpecies, OwnerCategory, LandUseCategory
 from forestdatamodel.conversion.util import apply_mappers
-
 # TODO: can we find a way to resolve the circular import introduced by trying to use these classes just for typing?
 # Even using the iffing below, pytest fails during top_level_collect
 # if typing.TYPE_CHECKING:
@@ -78,11 +77,60 @@ owner_map = {
     OwnerCategory.UNDIVIDED: MelaOwnerCategory.COMMUNITY
 }
 
+__site_type_map = {
+    SiteType.VERY_RICH_SITE: MelaSiteTypeCategory.VERY_RICH_SITE,
+    SiteType.RICH_SITE: MelaSiteTypeCategory.RICH_SITE,
+    SiteType.DAMP_SITE: MelaSiteTypeCategory.DAMP_SITE,
+    SiteType.SUB_DRY_SITE: MelaSiteTypeCategory.SUB_DRY_SITE,
+    SiteType.DRY_SITE: MelaSiteTypeCategory.DRY_SITE,
+    SiteType.BARREN_SITE: MelaSiteTypeCategory.BARREN_SITE,
+    SiteType.ROCKY_OR_SANDY_AREA: MelaSiteTypeCategory.ROCKY_OR_SANDY_AREA,
+    SiteType.OPEN_MOUNTAINS: MelaSiteTypeCategory.OPEN_MOUNTAINS,
+    SiteType.TUNTURIKOIVIKKO: MelaSiteTypeCategory.OPEN_MOUNTAINS,
+    SiteType.LAKIMETSA_TAI_TUNTURIHAVUMETSA: MelaSiteTypeCategory.OPEN_MOUNTAINS
+}
+
+#this doesn't have a mapping for TREELESS_MIRE, as its mapping to MELA values is determined by the SiteType category. 
+__soil_peatland_map = {
+    SoilPeatlandCategory.MINERAL_SOIL: MelaSoilAndPeatlandCategory.MINERAL_SOIL,
+    SoilPeatlandCategory.SPRUCE_MIRE: MelaSoilAndPeatlandCategory.PEATLAND_SPRUCE_MIRE,
+    SoilPeatlandCategory.PINE_MIRE: MelaSoilAndPeatlandCategory.PEATLAND_PINE_MIRE,
+}
+
+__mela_rich_mire_types = [
+    MelaSiteTypeCategory.VERY_RICH_SITE,
+    MelaSiteTypeCategory.RICH_SITE,
+    MelaSiteTypeCategory.DAMP_SITE
+]
+
+def site_type_mapper(target):
+    target.site_type_category = __site_type_map.get(target.site_type_category)
+    return target
+
+def soil_peatland_mapper(target):
+    """If the internal SoilPeatlandCategory is TREELESS_MIRE, determining the soil or peatland type for MELA requires knowing the site type (fertility type).
+    Make sure to set it first, because otherwise this method is unable to determine soil_peatland_category and sets it to None.
+    """
+
+    if target.soil_peatland_category == SoilPeatlandCategory.TREELESS_MIRE:
+        if target.site_type_category is None:
+            target.soil_peatland_category = None
+
+        elif target.site_type_category in __mela_rich_mire_types:
+            target.soil_peatland_category = MelaSoilAndPeatlandCategory.PEATLAND_RICH_TREELESS_MIRE
+        
+        else:
+            target.soil_peatland_category = MelaSoilAndPeatlandCategory.PEATLAND_BARREN_TREELESS_MIRE
+    else: 
+        target.soil_peatland_category = __soil_peatland_map.get(target.soil_peatland_category)
+    
+    return target
+    
+
 def land_use_mapper(target):
     """in-place mapping from internal LandUseCategory to MelaLandUseCategory"""
     target.land_use_category = land_use_map.get(target.land_use_category)
     return target
-
 
 
 def owner_mapper(target):
@@ -127,4 +175,4 @@ def mela_stand(stand):
 
 default_mela_tree_mappers = [species_mapper]
 default_mela_stratum_mappers = [species_mapper]
-default_mela_stand_mappers = [owner_mapper, land_use_mapper]
+default_mela_stand_mappers = [owner_mapper, land_use_mapper, site_type_mapper, soil_peatland_mapper]

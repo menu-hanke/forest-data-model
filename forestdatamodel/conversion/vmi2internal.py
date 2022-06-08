@@ -1,7 +1,7 @@
-from forestdatamodel.enums.vmi import VmiOwnerCategory, VmiSpecies, VmiLandUseCategory
-from forestdatamodel.enums.internal import OwnerCategory, TreeSpecies, LandUseCategory
+from forestdatamodel.enums.vmi import VmiSiteType, VmiOwnerCategory, VmiSoilPeatlandCategory, VmiSpecies, VmiLandUseCategory
+from forestdatamodel.enums.internal import SiteType, OwnerCategory, SoilPeatlandCategory, TreeSpecies, LandUseCategory
 
-species_map = {
+__species_map = {
     VmiSpecies.PINE: TreeSpecies.PINE,
     VmiSpecies.SPRUCE: TreeSpecies.SPRUCE,
     VmiSpecies.SILVER_BIRCH: TreeSpecies.SILVER_BIRCH,
@@ -35,7 +35,7 @@ species_map = {
     VmiSpecies.UNKNOWN: TreeSpecies.UNKNOWN,
 }
 
-land_use_map = {
+__land_use_map = {
     VmiLandUseCategory.FOREST: LandUseCategory.FOREST,
     VmiLandUseCategory.SCRUB_LAND: LandUseCategory.SCRUB_LAND,
     VmiLandUseCategory.WASTE_LAND: LandUseCategory.WASTE_LAND,
@@ -48,7 +48,7 @@ land_use_map = {
     VmiLandUseCategory.SEA: LandUseCategory.SEA
 }
 
-owner_map = {
+__owner_map = {
     VmiOwnerCategory.UNKNOWN: OwnerCategory.UNKNOWN,
     VmiOwnerCategory.PRIVATE: OwnerCategory.PRIVATE,
     VmiOwnerCategory.FOREST_INDUSTRY_ENTERPRISE: OwnerCategory.FOREST_INDUSTRY,
@@ -62,19 +62,47 @@ owner_map = {
     VmiOwnerCategory.UNDIVIDED: OwnerCategory.UNDIVIDED
 }
 
+__soil_peatland_map = {
+    VmiSoilPeatlandCategory.MINERAL_SOIL: SoilPeatlandCategory.MINERAL_SOIL,
+    VmiSoilPeatlandCategory.SPRUCE_MIRE: SoilPeatlandCategory.SPRUCE_MIRE,
+    VmiSoilPeatlandCategory.PINE_MIRE: SoilPeatlandCategory.PINE_MIRE,
+    VmiSoilPeatlandCategory.TREELESS_MIRE: SoilPeatlandCategory.TREELESS_MIRE,
+}
+
+__site_type_map = {
+    VmiSiteType.LEHTO: SiteType.VERY_RICH_SITE,
+    VmiSiteType.LEHTOMAINEN_KANGAS: SiteType.RICH_SITE,
+    VmiSiteType.TUOREKANGAS: SiteType.DAMP_SITE,
+    VmiSiteType.KUIVAHKOKANGAS: SiteType.SUB_DRY_SITE,
+    VmiSiteType.KUIVAKANGAS: SiteType.DRY_SITE,
+    VmiSiteType.KARUKKOKANGAS: SiteType.BARREN_SITE,
+    VmiSiteType.KALLIOMAA_TAI_HIETIKKO: SiteType.ROCKY_OR_SANDY_AREA,
+    VmiSiteType.LAKIMETSA_TAI_TUNTURIHAVUMETSA: SiteType.LAKIMETSA_TAI_TUNTURIHAVUMETSA,
+    VmiSiteType.TUNTURIKOIVIKKO: SiteType.TUNTURIKOIVIKKO,
+    VmiSiteType.AVOTUNTURI: SiteType.OPEN_MOUNTAINS
+}
+
+def convert_site_type_category(code: str) -> SiteType:
+    value = VmiSiteType(code)
+    return __site_type_map.get(value)
+
+def convert_soil_peatland_category(sp_code: str) -> LandUseCategory:
+    vmi_category = VmiSoilPeatlandCategory(sp_code)
+    return __soil_peatland_map.get(vmi_category)
+
 def convert_land_use_category(lu_code: str) -> LandUseCategory:
     """sanitization of lu_code is the responsibility of the caller, 
     meaning that this conversion will fail e.g. if the parameter is a lower-case letter."""
     vmi_category = VmiLandUseCategory(lu_code)
-    return land_use_map.get(vmi_category)
+    return __land_use_map.get(vmi_category)
 
 
 def convert_species(species_code: str) -> TreeSpecies:
     """Converts VMI species code to internal TreeSpecies code"""
     value = species_code.strip()
     vmi_species = VmiSpecies(value)
-    return species_map.get(vmi_species)
+    return __species_map.get(vmi_species)
 
 def convert_owner(owner_code: str) -> OwnerCategory:
     vmi_owner = VmiOwnerCategory(owner_code)
-    return owner_map.get(vmi_owner)
+    return __owner_map.get(vmi_owner)

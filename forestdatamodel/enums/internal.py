@@ -57,7 +57,7 @@ class LandUseCategory(IntEnum):
     REAL_ESTATE = 11
     OTHER_LAND = 12
     WATER_BODY = 13
-class OwnerCategory(Enum):
+class OwnerCategory(IntEnum):
     UNKNOWN = 0
     PRIVATE = 1
     FOREST_INDUSTRY = 2
@@ -69,3 +69,21 @@ class OwnerCategory(Enum):
     CONGREGATION = 8
     OTHER_COMMUNITY = 9
     UNDIVIDED = 10
+
+class SoilPeatlandCategory(IntEnum):
+    MINERAL_SOIL = 1 # kangas
+    SPRUCE_MIRE = 2 # korpi
+    PINE_MIRE = 3 # räme
+    TREELESS_MIRE = 4 # avosuo. Conversion to MELA's Neva or Letto is made with siteType
+
+class SiteType(IntEnum):
+    VERY_RICH_SITE = 1
+    RICH_SITE = 2
+    DAMP_SITE = 3
+    SUB_DRY_SITE = 4
+    DRY_SITE = 5
+    BARREN_SITE = 6
+    ROCKY_OR_SANDY_AREA = 7
+    OPEN_MOUNTAINS = 8
+    TUNTURIKOIVIKKO = 9
+    LAKIMETSA_TAI_TUNTURIHAVUMETSA = 10
