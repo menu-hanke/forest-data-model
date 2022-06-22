@@ -55,6 +55,16 @@ def species_mapper(target):
     return target
 
 
+def stand_location_converter(target):
+    """in-place conversion """
+    target.geo_location = (
+        target.geo_location[0] / 1000,
+        target.geo_location[1] / 1000,
+        target.geo_location[2],
+        target.geo_location[3])
+    return target
+
+
 def mela_stratum(stratum):
     """Convert a TreeStratum so that enumerated category variables are converted to Mela value space"""
     result = copy(stratum)
@@ -86,4 +96,4 @@ def mela_stand(stand):
 
 default_mela_tree_mappers = [species_mapper]
 default_mela_stratum_mappers = [species_mapper]
-default_mela_stand_mappers = []
+default_mela_stand_mappers = [stand_location_converter]
