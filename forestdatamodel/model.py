@@ -331,7 +331,7 @@ class ForestStand:
         self.area = area_ha
         self.area_weight = area_ha if area_weight is None else area_weight
 
-    def set_geo_location(self, lat: float, lon: float, height: float, system: str = "ERTS-TM35FIN"):
+    def set_geo_location(self, lat: float, lon: float, height: float, system: str = "EPSG:3067"):
         if not lat or not lon:
             raise ValueError("Invalid source values for geo location")
         self.geo_location = (lat, lon, height, system)

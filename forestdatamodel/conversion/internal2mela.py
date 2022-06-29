@@ -56,10 +56,20 @@ def species_mapper(target):
 
 
 def stand_location_converter(target):
-    """in-place conversion """
+    """
+    in-place conversion of ForestStand geolocation to kilometer precision,
+    and to YKJ/KKJ3 with band prefix 3 removed for EPSG:2393
+    """
+    if target.geo_location[3] == 'EPSG:3067':
+        lat, lon = (target.geo_location[0] / 1000, target.geo_location[1] / 1000)
+    elif target.geo_location[3] == 'EPSG:2393':
+        lat, lon = (target.geo_location[0] / 1000, target.geo_location[1] / 1000 - 3000)
+    else:
+        raise Exception("Unsupported CRS {} for stand {}".format(target.geo_location[3], target.identifier))
+
     target.geo_location = (
-        target.geo_location[0] / 1000,
-        target.geo_location[1] / 1000,
+        lat,
+        lon,
         target.geo_location[2],
         target.geo_location[3])
     return target
