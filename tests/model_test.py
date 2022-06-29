@@ -124,8 +124,8 @@ class TestForestDataModel(unittest.TestCase):
     def test_set_geo_location(self):
         fixture = ForestStand()
         assertions = [
-            ((6000.1, 304.3, 10.0), (6000.1, 304.3, 10.0, 'ERTS-TM35FIN')),
-            ((6000.1, 304.3, None), (6000.1, 304.3, None, 'ERTS-TM35FIN'))
+            ((6000.1, 304.3, 10.0), (6000.1, 304.3, 10.0, 'EPSG:3067')),
+            ((6000.1, 304.3, None), (6000.1, 304.3, None, 'EPSG:3067'))
         ]
         failures = [
             (None, 20.3, 20),
