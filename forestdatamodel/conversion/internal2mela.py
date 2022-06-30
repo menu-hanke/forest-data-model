@@ -1,6 +1,18 @@
 from copy import copy
-from forestdatamodel.enums.mela import MelaOwnerCategory, MelaSiteTypeCategory, MelaSoilAndPeatlandCategory, MelaTreeSpecies, MelaLandUseCategory
-from forestdatamodel.enums.internal import SiteType, SoilPeatlandCategory, TreeSpecies, OwnerCategory, LandUseCategory
+from forestdatamodel.enums.mela import (
+    MelaOwnerCategory, 
+    MelaSiteTypeCategory, 
+    MelaSoilAndPeatlandCategory, 
+    MelaTreeSpecies, 
+    MelaLandUseCategory
+    )
+from forestdatamodel.enums.internal import (
+    SiteType, 
+    SoilPeatlandCategory, 
+    TreeSpecies, 
+    OwnerCategory, 
+    LandUseCategory,
+    )
 from forestdatamodel.conversion.util import apply_mappers
 # TODO: can we find a way to resolve the circular import introduced by trying to use these classes just for typing?
 # Even using the iffing below, pytest fails during top_level_collect
@@ -77,7 +89,7 @@ owner_map = {
     OwnerCategory.UNDIVIDED: MelaOwnerCategory.COMMUNITY
 }
 
-__site_type_map = {
+_site_type_map = {
     SiteType.VERY_RICH_SITE: MelaSiteTypeCategory.VERY_RICH_SITE,
     SiteType.RICH_SITE: MelaSiteTypeCategory.RICH_SITE,
     SiteType.DAMP_SITE: MelaSiteTypeCategory.DAMP_SITE,
@@ -91,20 +103,20 @@ __site_type_map = {
 }
 
 #this doesn't have a mapping for TREELESS_MIRE, as its mapping to MELA values is determined by the SiteType category. 
-__soil_peatland_map = {
+_soil_peatland_map = {
     SoilPeatlandCategory.MINERAL_SOIL: MelaSoilAndPeatlandCategory.MINERAL_SOIL,
     SoilPeatlandCategory.SPRUCE_MIRE: MelaSoilAndPeatlandCategory.PEATLAND_SPRUCE_MIRE,
     SoilPeatlandCategory.PINE_MIRE: MelaSoilAndPeatlandCategory.PEATLAND_PINE_MIRE,
 }
 
-__mela_rich_mire_types = [
+_mela_rich_mire_types = [
     MelaSiteTypeCategory.VERY_RICH_SITE,
     MelaSiteTypeCategory.RICH_SITE,
     MelaSiteTypeCategory.DAMP_SITE
 ]
 
 def site_type_mapper(target):
-    target.site_type_category = __site_type_map.get(target.site_type_category)
+    target.site_type_category = _site_type_map.get(target.site_type_category)
     return target
 
 def soil_peatland_mapper(target):
@@ -116,13 +128,13 @@ def soil_peatland_mapper(target):
         if target.site_type_category is None:
             target.soil_peatland_category = None
 
-        elif target.site_type_category in __mela_rich_mire_types:
+        elif target.site_type_category in _mela_rich_mire_types:
             target.soil_peatland_category = MelaSoilAndPeatlandCategory.PEATLAND_RICH_TREELESS_MIRE
         
         else:
             target.soil_peatland_category = MelaSoilAndPeatlandCategory.PEATLAND_BARREN_TREELESS_MIRE
     else: 
-        target.soil_peatland_category = __soil_peatland_map.get(target.soil_peatland_category)
+        target.soil_peatland_category = _soil_peatland_map.get(target.soil_peatland_category)
     
     return target
     
