@@ -1,5 +1,19 @@
-from forestdatamodel.enums.forest_centre import ForestCentreSiteType, ForestCentreOwnerCategory, ForestCentreSoilPeatlandCategory, ForestCentreSpecies, ForestCentreLandUseCategory
-from forestdatamodel.enums.internal import SiteType, OwnerCategory, SoilPeatlandCategory, TreeSpecies, LandUseCategory
+from forestdatamodel.enums.forest_centre import (
+    ForestCentreSiteType, 
+    ForestCentreOwnerCategory, 
+    ForestCentreSoilPeatlandCategory, 
+    ForestCentreSpecies, 
+    ForestCentreLandUseCategory,
+    ForestCentreDrainageCategory
+    )
+from forestdatamodel.enums.internal import (
+    SiteType, 
+    OwnerCategory, 
+    SoilPeatlandCategory, 
+    TreeSpecies, 
+    LandUseCategory,
+    DrainageCategory
+    )
 
 _species_map = {
     ForestCentreSpecies.PINE: TreeSpecies.PINE,
@@ -70,6 +84,20 @@ _site_type_map = {
     ForestCentreSiteType.KALLIOMAA_TAI_HIETIKKO: SiteType.ROCKY_OR_SANDY_AREA,
     ForestCentreSiteType.LAKIMETSA_TAI_TUNTURI: SiteType.OPEN_MOUNTAINS
 }
+
+_drainage_category_map = {
+    ForestCentreDrainageCategory.OJITTAMATON_KANGAS: DrainageCategory.UNDRAINED_MINERAL_SOIL,
+    ForestCentreDrainageCategory.SOISTUNUT_KANGAS: DrainageCategory.MINERAL_SOIL_TURNED_MIRE,
+    ForestCentreDrainageCategory.OJITTETTU_KANGAS: DrainageCategory.DITCHED_MINERAL_SOIL,
+    ForestCentreDrainageCategory.LUONNONTILAINEN_SUO: DrainageCategory.UNDRAINED_MIRE,
+    ForestCentreDrainageCategory.OJIKKO: DrainageCategory.DITCHED_MIRE,
+    ForestCentreDrainageCategory.MUUTTUMA: DrainageCategory.TRANSFORMING_MIRE,
+    ForestCentreDrainageCategory.TURVEKANGAS: DrainageCategory.TRANSFORMED_MIRE
+}
+
+def convert_drainage_category(code: str):
+    value = ForestCentreDrainageCategory(code)
+    return _drainage_category_map.get(value)
 
 def convert_site_type_category(code: str) -> SiteType:
     value = ForestCentreSiteType(code)

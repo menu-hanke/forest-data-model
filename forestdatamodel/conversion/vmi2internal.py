@@ -96,6 +96,18 @@ _site_type_map = {
     VmiSiteType.AVOTUNTURI: SiteType.OPEN_MOUNTAINS
 }
 
+_drainage_category_map = {
+    VmiDrainageCategory.OJITTAMATON_KANGAS_TAI_SUO: DrainageCategory.UNDRAINED_MINERAL_SOIL_OR_MIRE,
+    VmiDrainageCategory.OJITETTU_KANGAS: DrainageCategory.DITCHED_MINERAL_SOIL,
+    VmiDrainageCategory.OJIKKO: DrainageCategory.DITCHED_MIRE,
+    VmiDrainageCategory.MUUTTUMA: DrainageCategory.TRANSFORMING_MIRE,
+    VmiDrainageCategory.TURVEKANGAS: DrainageCategory.TRANSFORMED_MIRE
+}
+
+def convert_drainage_category(code):
+    value = VmiDrainageCategory(code)
+    return _drainage_category_map.get(value)
+
 def convert_site_type_category(code: str) -> SiteType:
     value = VmiSiteType(code)
     return _site_type_map.get(value)
