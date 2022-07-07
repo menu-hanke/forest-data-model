@@ -3,6 +3,7 @@ from enum import Enum
 from typing import Optional
 from dataclasses import dataclass
 from forestdatamodel.conversion.internal2mela import mela_stand, mela_tree
+from forestdatamodel.enums.internal import TreeSpecies
 
 
 @dataclass
@@ -180,6 +181,14 @@ class ReferenceTree:
     # VMI tree_category for living/dead/otherwise unusable tree
     tree_category: Optional[str] = None
     sapling: bool = False
+
+    def __post_init__(self):
+        """This ensures that if a ReferenceTree's species is of type int, it will be converted to TreeSpecies."""
+        if type(self.species) is int:
+            self.species = TreeSpecies(self.species)
+        elif type(self.species) is not TreeSpecies:
+            raise ValueError("Tree species must be an integer or TreeSpecies enum")
+
 
     def __eq__(self, other: 'ReferenceTree'):
         return self.identifier == other.identifier
