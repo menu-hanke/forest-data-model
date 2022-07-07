@@ -186,7 +186,7 @@ class ReferenceTree:
         """This ensures that if a ReferenceTree's species is of type int, it will be converted to TreeSpecies."""
         if type(self.species) is int:
             self.species = TreeSpecies(self.species)
-        elif type(self.species) is not TreeSpecies:
+        elif type(self.species) is not TreeSpecies | None:
             raise ValueError("Tree species must be an integer or TreeSpecies enum")
 
 
